@@ -456,9 +456,18 @@ h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; letter-spacin
 .art-carousel-copy p:not(.eyebrow) { max-inline-size: 39rem; }
 .art-carousel-copy .image-credit { color: var(--mist); }
 .art-carousel-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
-.art-carousel-dots { display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
-.art-carousel-dot { inline-size: 0.8rem; aspect-ratio: 1; padding: 0; border: 0.125rem solid var(--dark-green); border-radius: 50%; background: transparent; cursor: pointer; }
-.art-carousel-dot.is-active { background: var(--dark-green); box-shadow: 0 0 0 0.2rem rgba(15, 77, 46, 0.16); }
+.art-topic-reference { margin-block: 0.5rem; color: var(--green); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.035em; }
+.art-slide-picker { display: grid; inline-size: min(100%, 26rem); gap: 0.35rem; color: var(--ink); font-size: 0.85rem; font-weight: 700; }
+.art-slide-picker input { inline-size: 100%; accent-color: var(--dark-green); cursor: pointer; }
+.art-topic-index { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.art-topic-index a { padding: 0.45rem 0.75rem; border: 0.0625rem solid var(--line); border-radius: 999rem; background: #fffaf0; color: var(--dark-green); font-size: 0.88rem; font-weight: 650; text-decoration: none; }
+.art-topic-index a:hover { border-color: var(--dark-green); background: #e6eddf; }
+.art-topic-list { display: grid; gap: clamp(2rem, 5vw, 4rem); }
+.art-topic-group { scroll-margin-block-start: 1.25rem; }
+.art-topic-heading { display: flex; align-items: end; justify-content: space-between; gap: 0.75rem 2rem; margin-block-end: 1rem; }
+.art-topic-heading .eyebrow { margin-block: 0 0.3rem; }
+.art-topic-heading h3 { margin: 0; font-size: clamp(1.35rem, 2.5vw, 1.9rem); }
+.art-topic-heading > p { max-inline-size: 42rem; margin: 0; color: #435156; }
 .art-emotions { display: grid; gap: 1.25rem; margin-block-start: clamp(2.5rem, 6vw, 4.5rem); padding-block-start: clamp(1.5rem, 3vw, 2.5rem); border-block-start: 0.0625rem solid var(--line); }
 .art-emotions .section-heading-row { align-items: end; }
 .art-emotions .section-heading-row h2 { margin: 0; font-size: clamp(1.5rem, 3vw, 2.2rem); }
@@ -476,13 +485,25 @@ h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; letter-spacin
 .prototype-art-heading { max-inline-size: var(--body-width); }
 .prototype-art-heading h2 { margin: 0; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.15; }
 .prototype-art-heading p:last-child { margin-block: 0.6rem 0; }
-.artwork-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: clamp(0.85rem, 2vw, 1.25rem); }
+.artwork-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(0.85rem, 2vw, 1.25rem); }
 .artwork-card { overflow: hidden; border: 0.0625rem solid var(--line); border-radius: var(--radius-medium); background: #ebe5d8; }
-.artwork-card img { display: block; inline-size: 100%; aspect-ratio: 4 / 3; padding: 0.5rem; object-fit: contain; background: var(--deep-space); }
-.artwork-card > div { padding: 1rem; }
-.artwork-card h3 { margin: 0; font-size: 1.2rem; }
+.artwork-open { display: block; inline-size: 100%; padding: 0; border: 0; background: var(--deep-space); cursor: pointer; }
+.artwork-open img { display: block; inline-size: 100%; aspect-ratio: 16 / 9; object-fit: cover; transition: transform 220ms ease; }
+.artwork-open:hover img { transform: scale(1.025); }
+.artwork-card-copy { padding: clamp(0.9rem, 2vw, 1.25rem); }
+.artwork-card h4 { margin: 0; font-size: 1.2rem; }
 .artwork-card p { margin-block: 0.4rem; }
 .artwork-card .image-credit { color: #5a676a; font-size: 0.875rem; }
+.art-boundary { padding-inline-start: 0.7rem; border-inline-start: 0.18rem solid var(--amber); color: #334146; font-size: 0.9rem; }
+.art-prompt-details { margin-block-start: 0.8rem; border-block-start: 0.0625rem solid rgba(26, 42, 45, 0.2); }
+.art-prompt-details summary { padding-block: 0.7rem 0.2rem; color: var(--dark-green); font-weight: 750; cursor: pointer; }
+.art-prompt-body { display: grid; justify-items: start; gap: 0.65rem; }
+.art-prompt-body > p { max-block-size: 13rem; overflow: auto; margin: 0; padding-inline-end: 0.4rem; color: #334146; font-size: 0.87rem; line-height: 1.5; white-space: pre-wrap; }
+.art-prompt-body .button { min-block-size: 2.5rem; font-size: 0.85rem; }
+.art-carousel-copy .art-prompt-details { border-color: rgba(245, 242, 234, 0.24); }
+.art-carousel-copy .art-prompt-details summary { color: var(--green); }
+.art-carousel-copy .art-prompt-body > p { color: var(--white); }
+.art-carousel-copy .metaphor-note { margin-block: 0.75rem; }
 
 .search-label { display: block; margin-block-end: 0.4rem; font-weight: 700; }
 .glossary-search { inline-size: min(100%, 34rem); min-block-size: 2.875rem; padding: 0.65rem 0.85rem; border: 0.0625rem solid #667275; border-radius: var(--radius-small); background: #fffaf0; color: var(--ink); }
@@ -919,4 +940,89 @@ body:has(.loading-intro) {
 
 @media (prefers-reduced-motion: reduce) {
   .home-mascot, .qubi-guide-image { animation: none !important; }
+}
+
+@media (max-width: 56rem) {
+  .art-topic-heading { align-items: start; flex-direction: column; }
+}
+
+@media (max-width: 40rem) {
+  .art-carousel-controls { gap: 0.65rem; }
+  .art-slide-picker { order: -1; flex: 1 0 100%; }
+  .art-topic-index { gap: 0.4rem; }
+  .art-topic-index a { font-size: 0.8rem; }
+  .artwork-grid { grid-template-columns: minmax(0, 1fr); }
+  .artwork-open img { aspect-ratio: 16 / 10; }
+}
+
+/* Let the images lead. Keep descriptions available on hover, focus, and touch. */
+.art-carousel-stage { position: relative; display: block; min-block-size: 0; aspect-ratio: 16 / 8.5; border-radius: var(--radius-large); background: var(--deep-space); isolation: isolate; }
+.art-carousel-image-button { position: absolute; inset: 0; display: block; overflow: hidden; inline-size: 100%; block-size: 100%; padding: 0; border: 0; background: var(--deep-space); cursor: zoom-in; }
+.art-carousel-image-button img { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; transition: transform 650ms ease, filter 350ms ease; }
+.art-carousel-stage:hover .art-carousel-image-button img { transform: scale(1.025); filter: brightness(0.72); }
+.art-fullsize-hint { position: absolute; inset-block-start: 1rem; inset-inline-end: 1rem; padding: 0.5rem 0.75rem; border: 0.0625rem solid rgba(245, 242, 234, 0.5); border-radius: 999rem; background: rgba(4, 10, 16, 0.76); color: var(--white); font-size: 0.82rem; }
+.art-carousel-copy { position: absolute; inset-inline: 0; inset-block-end: 0; z-index: 1; align-self: auto; max-inline-size: none; padding: clamp(1.25rem, 4vw, 3.5rem); background: linear-gradient(0deg, rgba(4, 10, 16, 0.97) 0%, rgba(4, 10, 16, 0.76) 56%, transparent 100%); pointer-events: none; }
+.art-carousel-copy .eyebrow { margin-block: 0 0.35rem; }
+.art-carousel-copy .art-topic-reference { margin-block: 0.35rem; color: #b6c8c4; }
+.art-carousel-copy h2 { max-inline-size: 24ch; text-wrap: balance; }
+.art-carousel-copy .image-credit { margin-block-end: 0; color: #d3deda; }
+.art-carousel-description { max-block-size: 0; overflow: hidden; margin-block: 0 !important; opacity: 0; transition: max-block-size 260ms ease, opacity 220ms ease, margin 220ms ease; }
+.art-carousel-stage:hover .art-carousel-description,
+.art-carousel-stage:focus-within .art-carousel-description { max-block-size: 12rem; margin-block: 0.75rem !important; opacity: 1; }
+.art-slide-picker { color: var(--ink); }
+.artwork-card { overflow: hidden; border-color: rgba(17, 37, 40, 0.16); background: #07131a; }
+.artwork-open { position: relative; aspect-ratio: 16 / 9; overflow: hidden; text-align: start; }
+.artwork-open img { block-size: 100%; aspect-ratio: auto; padding: 0; object-fit: cover; transition: transform 500ms ease, filter 300ms ease; }
+.artwork-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: end; gap: 0.45rem; overflow: auto; padding: clamp(0.8rem, 2vw, 1.35rem); background: linear-gradient(0deg, rgba(4, 10, 16, 0.97), rgba(4, 10, 16, 0.79) 66%, rgba(4, 10, 16, 0.1)); color: var(--white); opacity: 0; text-align: start; transition: opacity 220ms ease; }
+.artwork-open:hover img, .artwork-open:focus-visible img { transform: scale(1.035); filter: brightness(0.7); }
+.artwork-open:hover .artwork-overlay, .artwork-open:focus-visible .artwork-overlay { opacity: 1; }
+.artwork-overlay-kicker { color: var(--green); font-size: 0.73rem; font-weight: 750; letter-spacing: 0.08em; text-transform: uppercase; }
+.artwork-overlay-title { font-family: "Space Grotesk", sans-serif; font-size: clamp(1.05rem, 2vw, 1.45rem); font-weight: 700; line-height: 1.15; }
+.artwork-overlay-copy { max-inline-size: 58ch; color: #edf2ef; font-size: 0.83rem; line-height: 1.35; }
+.artwork-overlay-action { align-self: start; margin-block-start: 0.2rem; color: #baf3bd; font-size: 0.78rem; font-weight: 700; }
+.artwork-card-copy { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; padding: 0.65rem 0.9rem; background: #f3eee3; }
+.artwork-card-copy > .image-credit { margin: 0; font-size: 0.76rem; }
+.artwork-card-copy .art-prompt-details { flex: 1 1 100%; margin: 0; border: 0; }
+.artwork-card-copy .art-prompt-details summary { padding: 0.35rem 0; font-size: 0.78rem; }
+.artwork-card-copy .art-prompt-body { max-block-size: min(20rem, 60vh); overflow: auto; padding: 0.5rem 0; }
+.art-lightbox { inline-size: min(94vw, 88rem); max-inline-size: none; max-block-size: 94svh; overflow: visible; padding: 0; border: 0.0625rem solid rgba(245, 242, 234, 0.25); border-radius: var(--radius-large); background: #07131a; color: var(--white); }
+.art-lightbox::backdrop { background: rgba(1, 5, 9, 0.9); backdrop-filter: blur(0.25rem); }
+.art-lightbox-content { position: relative; display: grid; max-block-size: 94svh; grid-template-rows: minmax(0, 1fr) auto; }
+.art-lightbox-content > img { display: block; inline-size: 100%; max-block-size: 76svh; object-fit: contain; background: #040a10; }
+.art-lightbox-close { position: absolute; z-index: 1; inset-block-start: 0.8rem; inset-inline-end: 0.8rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 0.8rem; border: 0.0625rem solid rgba(245, 242, 234, 0.55); border-radius: 999rem; background: rgba(4, 10, 16, 0.88); color: var(--white); cursor: pointer; }
+.art-lightbox-close span { font-size: 1.25rem; line-height: 1; }
+.art-lightbox-caption { display: flex; align-items: end; justify-content: space-between; gap: 0.75rem 2rem; padding: clamp(1rem, 2vw, 1.5rem); }
+.art-lightbox-caption .eyebrow { margin-block: 0 0.25rem; color: var(--green); }
+.art-lightbox-caption h2 { margin: 0; font-size: clamp(1.25rem, 2.5vw, 2rem); }
+.art-lightbox-caption p { margin-block: 0.4rem 0; color: var(--mist); }
+.art-lightbox-caption .image-credit { flex: 0 0 auto; }
+
+@media (hover: none) {
+  .art-carousel-description { max-block-size: 12rem; margin-block: 0.6rem !important; opacity: 1; }
+  .artwork-overlay { opacity: 1; }
+  .art-carousel-image-button img { filter: brightness(0.72); }
+}
+
+@media (max-width: 48rem) {
+  .art-carousel-stage { aspect-ratio: 4 / 3; min-block-size: 26rem; }
+  .art-carousel-image-button img { object-position: center; }
+  .art-carousel-copy { padding: 1.1rem; }
+  .art-carousel-copy h2 { font-size: clamp(1.4rem, 6vw, 2rem); }
+  .art-carousel-description { font-size: 0.9rem; line-height: 1.35; }
+  .art-carousel-stage:hover .art-carousel-description,
+  .art-carousel-stage:focus-within .art-carousel-description { max-block-size: 13rem; }
+  .art-slide-picker { order: -1; flex: 1 0 100%; }
+  .art-carousel-controls { justify-content: space-between; }
+  .art-carousel-controls > .button { flex: 1 1 auto; }
+  .artwork-overlay { gap: 0.25rem; padding: 0.7rem; }
+  .artwork-overlay-copy { max-block-size: 3rem; overflow: auto; font-size: 0.75rem; }
+  .artwork-card-copy { align-items: start; flex-direction: column; }
+  .art-lightbox { inline-size: calc(100vw - 1rem); max-block-size: 96svh; }
+  .art-lightbox-content { max-block-size: 96svh; }
+  .art-lightbox-content > img { max-block-size: 68svh; }
+  .art-lightbox-caption { align-items: start; flex-direction: column; gap: 0.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-carousel-image-button img, .artwork-open img, .artwork-overlay, .art-carousel-description { transition: none !important; }
 }

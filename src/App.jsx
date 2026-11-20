@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { conceptArt, conceptArtTopics } from "./content/artworks.js";
 
 const videos = [
   {
@@ -694,36 +695,6 @@ function TopicPage({ topic, progressIds, canSaveProgress, onMarkExplored, onNavi
 }
 
 function ArtPage() {
-  const artworks = [
-    {
-      title: "Black-hole loading scene",
-      image: "/assets/black-hole-scene.png",
-      alt: "A dark event horizon with a luminous amber and blue accretion ring against a star field.",
-      caption: "A story-world threshold for the Atlas, used as atmosphere rather than a scientific diagram.",
-      credit: "Generated with OpenAI Image Generation · interface atmosphere.",
-    },
-    {
-      title: "Qubi character reference",
-      image: "/assets/qubi-reference-sheet.png",
-      alt: "Qubi character sheet with front, side, and back views, plus six facial expressions.",
-      caption: "The team's model sheet sets Qubi's shape, colors, clothing, and expression range.",
-      credit: "Provided by the project team · original Qubi reference sheet.",
-    },
-    {
-      title: "Qubi 3D-style render",
-      image: "/assets/qubi-3d-clean-512.png",
-      alt: "A friendly 3D-style Qubi render wearing a forest-green HKU shirt and raising one hand.",
-      caption: "A polished mascot render guided by the supplied model sheet.",
-      credit: "Generated with OpenAI Image Generation from the team's supplied character reference.",
-    },
-    {
-      title: "Accretion-ring layer",
-      image: "/assets/accretion-ring.png",
-      alt: "A tilted amber-and-blue luminous ring layer on transparency.",
-      caption: "A separate visual layer used to animate the loading-screen scene.",
-      credit: "Generated with OpenAI Image Generation · interface animation asset.",
-    },
-  ];
   const emotions = [
     { name: "Happy", position: "0%", use: "Welcoming a visitor or celebrating a small discovery." },
     { name: "Curious", position: "20%", use: "Inviting the visitor to ask a question." },
@@ -734,57 +705,168 @@ function ArtPage() {
   ];
   const [activeArtwork, setActiveArtwork] = useState(0);
   const [activeEmotion, setActiveEmotion] = useState(1);
-  const changeArtwork = (step) => setActiveArtwork((current) => (current + step + artworks.length) % artworks.length);
-  const artwork = artworks[activeArtwork];
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [lightboxArtwork, setLightboxArtwork] = useState(null);
+  const [copiedPrompt, setCopiedPrompt] = useState(null);
+  const lightboxRef = useRef(null);
+  const changeArtwork = (step) => setActiveArtwork((current) => (current + step + conceptArt.length) % conceptArt.length);
+  const copyPrompt = async (item) => {
+    try {
+      await navigator.clipboard.writeText(item.prompt);
+      setCopiedPrompt(item.id);
+      window.setTimeout(() => setCopiedPrompt(null), 1800);
+    } catch {
+      setCopiedPrompt(`unavailable-${item.id}`);
+      window.setTimeout(() => setCopiedPrompt(null), 2400);
+    }
+  };
+  const renderPromptDetails = (item) => (
+    <details className="art-prompt-details">
+      <summary>View the NanoBanana Pro prompt</summary>
+      <div className="art-prompt-body">
+        <p>{item.prompt}</p>
+        <button className="button button-secondary" type="button" onClick={() => copyPrompt(item)}>
+          {copiedPrompt === item.id ? "Prompt copied" : copiedPrompt === `unavailable-${item.id}` ? "Copy unavailable in this browser" : "Copy full prompt"}
+        </button>
+      </div>
+    </details>
+  );
+  const artwork = conceptArt[activeArtwork];
   const emotion = emotions[activeEmotion];
+
+  useEffect(() => {
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePlaybackPreference = () => setIsPlaying(!motionPreference.matches);
+    updatePlaybackPreference();
+    motionPreference.addEventListener("change", updatePlaybackPreference);
+    return () => motionPreference.removeEventListener("change", updatePlaybackPreference);
+  }, []);
+
+  useEffect(() => {
+    if (!isPlaying || isHovered || isFocused) return undefined;
+    const timer = window.setInterval(() => setActiveArtwork((current) => (current + 1) % conceptArt.length), 7000);
+    return () => window.clearInterval(timer);
+  }, [isPlaying, isHovered, isFocused]);
+
+  useEffect(() => {
+    if (!lightboxArtwork) return undefined;
+    const dialog = lightboxRef.current;
+    if (dialog && !dialog.open) dialog.showModal();
+    return () => {
+      if (dialog?.open) dialog.close();
+    };
+  }, [lightboxArtwork]);
 
   return (
     <main className="page-shell content-page art-page">
       <div className="page-heading">
         <p className="eyebrow">Images and ideas</p>
         <h1>Artwork</h1>
-        <p>See how the project uses visual storytelling to introduce quantum information.</p>
+        <p>Twenty-two cinematic concept-art variations trace eleven ideas from the CCST9077 lectures. Explore the image first, then open its science note and the exact prompt behind it.</p>
       </div>
       <section className="art-carousel" aria-label="Featured artwork slideshow">
-        <div className="art-carousel-stage" aria-live="polite" aria-atomic="true">
-          <img key={artwork.image} src={artwork.image} alt={artwork.alt} />
+        <div
+          className="art-carousel-stage"
+          aria-live={isPlaying && !isHovered && !isFocused ? "off" : "polite"}
+          aria-atomic="true"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false); }}
+        >
+          <button className="art-carousel-image-button" type="button" onClick={() => setLightboxArtwork(artwork)} aria-label={`View ${artwork.title} full size`}>
+            <img key={artwork.id} src={`/assets/concept-art/${artwork.filename}`} alt={artwork.alt} fetchPriority="high" />
+            <span className="art-fullsize-hint">Open full-size artwork ↗</span>
+          </button>
           <div className="art-carousel-copy">
-            <p className="eyebrow">Featured image · {String(activeArtwork + 1).padStart(2, "0")} / {String(artworks.length).padStart(2, "0")}</p>
+            <p className="eyebrow">Featured image · {String(activeArtwork + 1).padStart(2, "0")} / {String(conceptArt.length).padStart(2, "0")}</p>
+            <p className="art-topic-reference">{artwork.lecture} · {artwork.variant}</p>
             <h2>{artwork.title}</h2>
-            <p>{artwork.caption}</p>
-            <p className="image-credit">{artwork.credit}</p>
+            <p className="art-carousel-description">{artwork.caption} <strong>What the image cannot show:</strong> {artwork.boundary}</p>
+            <p className="image-credit">AI-generated with {artwork.tool}</p>
           </div>
         </div>
         <div className="art-carousel-controls" aria-label="Slideshow controls">
           <button className="button button-secondary" type="button" onClick={() => changeArtwork(-1)} aria-label="Previous artwork">← Previous</button>
-          <div className="art-carousel-dots" role="group" aria-label="Choose an artwork slide">
-            {artworks.map((item, index) => (
-              <button key={item.title} type="button" className={`art-carousel-dot${index === activeArtwork ? " is-active" : ""}`} aria-label={`Show ${item.title}`} aria-current={index === activeArtwork ? "true" : undefined} onClick={() => setActiveArtwork(index)} />
-            ))}
-          </div>
+          <button className="button button-secondary" type="button" onClick={() => setIsPlaying((playing) => !playing)} aria-pressed={isPlaying}>
+            {isPlaying ? "Pause slideshow" : "Play slideshow"}
+          </button>
+          <label className="art-slide-picker">
+            <span>Slide {String(activeArtwork + 1).padStart(2, "0")} of {conceptArt.length}</span>
+            <input type="range" min="0" max={conceptArt.length - 1} value={activeArtwork} aria-label="Choose a featured artwork" onChange={(event) => setActiveArtwork(Number(event.target.value))} />
+          </label>
           <button className="button button-secondary" type="button" onClick={() => changeArtwork(1)} aria-label="Next artwork">Next →</button>
         </div>
       </section>
 
       <section className="prototype-art" aria-labelledby="all-art-title">
         <div className="prototype-art-heading">
-          <p className="eyebrow">Image archive</p>
-          <h2 id="all-art-title">All current showcase images</h2>
-          <p>Browse the complete set currently included in the prototype. Eleven lecture-linked concept artworks are planned; this archive will expand as the team generates and reviews them.</p>
+          <p className="eyebrow">The full collection</p>
+          <h2 id="all-art-title">Eleven ideas · twenty-two variations</h2>
+          <p>Every image stays in the collection. Browse by lecture topic, compare the two visual takes, and open “View the NanoBanana Pro prompt” for the generation prompt used for that topic.</p>
         </div>
-        <div className="artwork-grid">
-          {artworks.map((item) => (
-            <article className="artwork-card" key={item.title}>
-              <img src={item.image} alt={item.alt} />
-              <div>
-                <h3>{item.title}</h3>
-                <p>{item.caption}</p>
-                <p className="image-credit">{item.credit}</p>
+        <nav className="art-topic-index" aria-label="Jump to an artwork topic">
+          {conceptArtTopics.map((topic) => <a key={topic.id} href={`#art-topic-${topic.id}`}>{topic.title}</a>)}
+        </nav>
+        <div className="art-topic-list">
+          {conceptArtTopics.map((topic) => (
+            <section className="art-topic-group" id={`art-topic-${topic.id}`} key={topic.id} aria-labelledby={`art-topic-title-${topic.id}`}>
+              <div className="art-topic-heading">
+                <div>
+                  <p className="eyebrow">{topic.lecture}</p>
+                  <h3 id={`art-topic-title-${topic.id}`}>{topic.title}</h3>
+                </div>
+                <p>{topic.caption}</p>
               </div>
-            </article>
+              <div className="artwork-grid">
+                {topic.images.map((item) => (
+                  <article className="artwork-card" key={item.id}>
+                    <button className="artwork-open" type="button" onClick={() => setLightboxArtwork(conceptArt.find((entry) => entry.id === item.id))} aria-label={`View ${item.title} full size`}>
+                      <img src={`/assets/concept-art/${item.filename}`} alt={item.alt} loading="lazy" decoding="async" />
+                      <span className="artwork-overlay">
+                        <span className="artwork-overlay-kicker">{topic.lecture} · {item.variant}</span>
+                        <span className="artwork-overlay-title">{item.title}</span>
+                        <span className="artwork-overlay-copy">{item.alt}</span>
+                        <span className="artwork-overlay-copy"><strong>Science note:</strong> {topic.boundary}</span>
+                        <span className="artwork-overlay-action">Open full image ↗</span>
+                      </span>
+                    </button>
+                    <div className="artwork-card-copy">
+                      <p className="image-credit">AI-generated with {item.tool}</p>
+                      {renderPromptDetails({ ...item, prompt: topic.prompt })}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       </section>
+
+      {lightboxArtwork && (
+        <dialog
+          ref={lightboxRef}
+          className="art-lightbox"
+          aria-labelledby="art-lightbox-title"
+          onClose={() => setLightboxArtwork(null)}
+          onClick={(event) => { if (event.target === event.currentTarget) event.currentTarget.close(); }}
+        >
+          <div className="art-lightbox-content">
+            <button className="art-lightbox-close" type="button" onClick={() => lightboxRef.current?.close()} aria-label="Close full-size artwork">Close <span aria-hidden="true">×</span></button>
+            <img src={`/assets/concept-art/${lightboxArtwork.filename}`} alt={lightboxArtwork.alt} />
+            <div className="art-lightbox-caption">
+              <div>
+                <p className="eyebrow">{lightboxArtwork.lecture} · {lightboxArtwork.variant}</p>
+                <h2 id="art-lightbox-title">{lightboxArtwork.title}</h2>
+                <p>{lightboxArtwork.alt}</p>
+              </div>
+              <p className="image-credit">AI-generated with {lightboxArtwork.tool}</p>
+            </div>
+          </div>
+        </dialog>
+      )}
 
       <section className="art-emotions" aria-labelledby="qubi-emotions-title">
         <div className="section-heading-row">
