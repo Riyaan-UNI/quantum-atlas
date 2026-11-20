@@ -292,6 +292,31 @@ function Header({ active, progress, onNavigate }) {
   );
 }
 
+const qubiExpressionPositions = {
+  happy: "0%",
+  curious: "20%",
+  surprised: "40%",
+  thinking: "60%",
+  excited: "80%",
+  dizzy: "100%",
+};
+
+function QubiGuide({ mood = "curious", message, compact = false }) {
+  const position = qubiExpressionPositions[mood] ?? qubiExpressionPositions.curious;
+  return (
+    <aside className={`qubi-guide${compact ? " is-compact" : ""}`} aria-label="Qubi's note">
+      <div
+        key={mood}
+        className="qubi-guide-image"
+        role="img"
+        aria-label={`Qubi's ${mood} expression`}
+        style={{ backgroundPosition: `${position} 65%` }}
+      />
+      <p className="qubi-guide-message" aria-live="polite">{message}</p>
+    </aside>
+  );
+}
+
 function Footer({ onNavigate }) {
   return (
     <footer className="site-footer">
@@ -330,6 +355,7 @@ function HomePage({ progress, onNavigate, onEpisode, onTopic }) {
         </div>
         <div className="home-mascot-wrap">
           <img className="home-mascot" src="/assets/qubi-3d-clean-512.png" alt="Qubi, your curious guide" />
+          <p className="home-qubi-caption">Qubi is ready to explore with you.</p>
         </div>
       </section>
 
@@ -394,6 +420,7 @@ function EpisodeIndex({ onOpenEpisode, onTopic }) {
         <h1>Episodes</h1>
         <p>Start with a story, then follow its topic links into the wider course.</p>
       </div>
+      <QubiGuide mood="happy" message="Pick a film that makes you curious. The topic map is always open when you want to go deeper." compact />
       <div className="episode-list">
         {videos.map((episode, index) => (
           <article className="episode-row" key={episode.id}>
@@ -438,6 +465,7 @@ function EpisodePage({ index, onBack, onTopic, onNext }) {
           <h1>{episode.title}</h1>
           <p>The video link has not been added yet. The topic pages are available now.</p>
         </div>
+        <QubiGuide mood="thinking" message="This episode's script is ready; follow its questions into the related topic pages." compact />
         <div className="availability-panel">
           <h2>Explore the related ideas</h2>
           <p>No-cloning, quantum money, and quantum key distribution connect to these topics.</p>
@@ -477,6 +505,7 @@ function EpisodePage({ index, onBack, onTopic, onNext }) {
         <p>Use the caption controls in the player when a caption track is available. The team should add and verify the transcript before final submission.</p>
         <a href={`https://www.youtube.com/watch?v=${episode.id}`} target="_blank" rel="noreferrer">Open this episode on YouTube</a>
       </div>
+      <QubiGuide mood="curious" message="What surprised you in the story? Follow a related topic to compare it with the lecture idea." compact />
       <div className="course-connection">
         <p className="eyebrow">Related topics</p>
         {associated.map((topic) => (
@@ -520,6 +549,7 @@ function AtlasPage({ progress, progressIds, onTopic }) {
         </div>
         <button className="button button-primary" type="button" onClick={() => onTopic("information")}>Start with Topic 1</button>
       </div>
+      <QubiGuide mood="curious" message="Choose any region. Nothing is locked, and you can follow the map in your own order." compact />
       <div className="atlas-groups">
         {groupsWithTopics.map((group) => (
           <section className="atlas-group" key={group.name}>
@@ -554,6 +584,12 @@ function TopicPage({ topic, progressIds, canSaveProgress, onMarkExplored, onNavi
   const alreadyMarked = progressIds.includes(topic.id);
   const topicIndex = topics.findIndex((item) => item.id === topic.id);
   const nextTopic = topics[topicIndex + 1];
+  const qubiMood = alreadyMarked ? "happy" : revealed ? (selected === topic.answer ? "excited" : "thinking") : selected === null ? "curious" : "surprised";
+  const qubiMessage = alreadyMarked
+    ? nextTopic ? `Good work. The next topic is ${nextTopic.title}.` : "You've reached the end of the topic list. Let's look at the full Atlas."
+    : revealed
+      ? selected === topic.answer ? "You spotted the lecture's key idea. Keep asking why!" : "A useful prediction. Compare it with the explanation and try the next idea."
+      : selected === null ? "Make a prediction when you're ready. This is for thinking, not scoring." : "Interesting choice. Ready to see what the lecture says?";
 
   useEffect(() => {
     setSelected(null);
@@ -588,6 +624,7 @@ function TopicPage({ topic, progressIds, canSaveProgress, onMarkExplored, onNavi
           <span className="activity-step">Predict <span aria-hidden="true">→</span> Reveal <span aria-hidden="true">→</span> Explain</span>
         </div>
         <p className="prediction-question">Before reading the evidence, what do you think?</p>
+        <QubiGuide mood={qubiMood} message={qubiMessage} compact />
         <div className="prediction-choices" role="group" aria-label="Choose your prediction">
           {topic.choices.map((choice, index) => (
             <button
@@ -696,8 +733,10 @@ function ArtPage() {
     { name: "Dizzy", position: "100%", use: "A playful expression for uncertainty; not a depiction of superposition." },
   ];
   const [activeArtwork, setActiveArtwork] = useState(0);
+  const [activeEmotion, setActiveEmotion] = useState(1);
   const changeArtwork = (step) => setActiveArtwork((current) => (current + step + artworks.length) % artworks.length);
   const artwork = artworks[activeArtwork];
+  const emotion = emotions[activeEmotion];
 
   return (
     <main className="page-shell content-page art-page">
@@ -756,14 +795,15 @@ function ArtPage() {
           <p>Use these expressions as friendly story cues, not as literal pictures of quantum states.</p>
         </div>
         <div className="emotion-grid">
-          {emotions.map((emotion) => (
-            <article className="emotion-card" key={emotion.name}>
-              <div className="emotion-image" role="img" aria-label={`Qubi's ${emotion.name.toLowerCase()} expression`} style={{ backgroundPosition: `${emotion.position} 65%` }} />
-              <h3>{emotion.name}</h3>
-              <p>{emotion.use}</p>
-            </article>
+          {emotions.map((emotionItem, index) => (
+            <button className={`emotion-card${activeEmotion === index ? " is-selected" : ""}`} key={emotionItem.name} type="button" aria-pressed={activeEmotion === index} onClick={() => setActiveEmotion(index)}>
+              <div className="emotion-image" role="img" aria-label={`Qubi's ${emotionItem.name.toLowerCase()} expression`} style={{ backgroundPosition: `${emotionItem.position} 65%` }} />
+              <span className="emotion-card-title">{emotionItem.name}</span>
+              <span className="emotion-card-copy">{emotionItem.use}</span>
+            </button>
           ))}
         </div>
+        <QubiGuide mood={emotion.name.toLowerCase()} message={emotion.use} compact />
         <p className="metaphor-note"><strong>Metaphor note:</strong> Qubi's “Dizzy” expression is playful character art. Superposition is a quantum state, not a feeling or a visible spinning face.</p>
       </section>
     </main>
@@ -818,6 +858,34 @@ function GlossaryPage() {
 }
 
 function CreditsPage() {
+  const teamMembers = [
+    {
+      name: "Riyaan",
+      fullName: "Patan Mohammed Riyaan",
+      roles: ["Website development", "Video editing", "Qubi mascot work"],
+      evidence: "website",
+    },
+    {
+      name: "Damian",
+      fullName: "Lau Long Yat Damian",
+      roles: ["Qubi's voice", "Lead video editor", "Video scriptwriting", "Qubi mascot inventor"],
+      evidence: "mascot",
+    },
+    {
+      name: "Markus",
+      fullName: "Doelvik Markus Skjerstad",
+      roles: ["Video speaker"],
+      evidence: "speaker",
+    },
+    {
+      name: "Cynthia",
+      fullName: "Sun Siyan",
+      roles: ["Video scriptwriting", "Video speaker"],
+      evidence: "scripts",
+    },
+  ];
+  const releasedVideos = videos.filter((video) => !video.forthcoming);
+
   return (
     <main className="page-shell content-page credits-page">
       <div className="page-heading">
@@ -825,15 +893,61 @@ function CreditsPage() {
         <h1>About &amp; credits</h1>
         <p>Quantum Atlas is a four-person CCST9077 multimedia project about quantum information for non-specialists.</p>
       </div>
-      <section className="credits-section">
-        <h2>Team contributions</h2>
-        <p>These roles are carried over from the previous prototype's contribution record; update them if responsibilities change during this version.</p>
-        <ul className="contribution-list">
-          <li><strong>Patan Mohammed Riyaan (Riyaan)</strong><span>Website development, video editing, and Qubi mascot work.</span></li>
-          <li><strong>Lau Long Yat Damian (Damian)</strong><span>Voice of Qubi in the videos, chief video editing, video script-writing, and Qubi mascot invention.</span></li>
-          <li><strong>Doelvik Markus Skjerstad (Markus)</strong><span>Speaking in the videos and video script-writing.</span></li>
-          <li><strong>Sun Siyan (Cynthia)</strong><span>Video script-writing and speaking in the videos.</span></li>
-        </ul>
+      <section className="crew-board" aria-labelledby="crew-board-title">
+        <div className="crew-board-heading">
+          <div>
+            <p className="eyebrow">A project made by four people</p>
+            <h2 id="crew-board-title">Follow the work to the crew</h2>
+          </div>
+          <p>Each card pairs a real project artifact with the contribution behind it. Roles are carried forward from the previous prototype's record.</p>
+        </div>
+        <div className="crew-grid">
+          {teamMembers.map((member, index) => (
+            <article className={`crew-card crew-card-${member.evidence}`} key={member.name}>
+              <div className="crew-evidence">
+                {member.evidence === "website" && (
+                  <div className="crew-site-preview">
+                    <img src="/assets/black-hole-scene.png" alt="The dark cinematic black-hole scene used in the Quantum Atlas experience." />
+                    <div className="crew-site-window" aria-hidden="true">
+                      <span>QUANTUM ATLAS</span>
+                      <strong>Chart the unknown.</strong>
+                      <small>Keep asking why.</small>
+                    </div>
+                  </div>
+                )}
+                {member.evidence === "mascot" && (
+                  <img className="crew-mascot-sheet" src="/assets/qubi-reference-sheet.png" alt="The team's Qubi model sheet, showing mascot poses and six expressions." />
+                )}
+                {member.evidence === "speaker" && (
+                  <div className="crew-video-strip" aria-label="The three released episode videos">
+                    {releasedVideos.map((video) => (
+                      <a key={video.id} href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" rel="noreferrer" aria-label={`Watch ${video.title}`}>
+                        <img src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} alt={`Episode image: ${video.title}`} loading="lazy" />
+                      </a>
+                    ))}
+                    <span className="crew-evidence-label">ON CAMERA</span>
+                  </div>
+                )}
+                {member.evidence === "scripts" && (
+                  <div className="crew-script-page">
+                    <p className="script-page-kicker">FROM THE EPISODE SCRIPT</p>
+                    <blockquote>“Qubi: Ooh, I love secrets!”</blockquote>
+                    <span>Dialogue · science story · spoken performance</span>
+                  </div>
+                )}
+              </div>
+              <div className="crew-card-copy">
+                <p className="crew-index">CREW MEMBER {String(index + 1).padStart(2, "0")}</p>
+                <h3>{member.name}</h3>
+                <p className="crew-full-name">{member.fullName} · {member.name}</p>
+                <div className="crew-role-chips" aria-label={`${member.name}'s contributions`}>
+                  {member.roles.map((role) => <span key={role}>{role}</span>)}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="crew-record-note">This is the contribution record from the previous prototype. The team should revise it if responsibilities in this version have changed.</p>
       </section>
       <section className="credits-section" id="ai-use">
         <h2>AI use</h2>

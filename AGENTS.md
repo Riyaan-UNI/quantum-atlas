@@ -17,6 +17,8 @@ Before making substantial visual changes, use the Product Design plugin's `get-c
 - Prompt 7 now calls for 11 lecture-specific concept-art prompts. The existing black-hole artwork remains the site's hero; the team will generate and review the 11 gallery pieces.
 - After a visitor marks a topic as explored, offer a direct button to the next topic in course order. The last topic returns to the Atlas; no content is locked.
 - Credit the four members using the names and contribution record supplied by the user and carried forward from the previous prototype. Label those roles as the prior record so the team can revise them if their responsibilities change.
+- Markus's contribution is video speaker only. Show contributions through the project artifacts they relate to, with concise role labels; do not present Markus as a scriptwriter.
+- Qubi should react at meaningful moments across the site using the supplied expression sheet, with subtle idle/reaction motion and reduced-motion support. Keep the 3D Qubi render on the home page and let topic interactions change Qubi's expression.
 - Quantum concept art should make the lecture phenomenon—not Qubi or generic retro hardware—the focal point. Qubi is optional and is kept separate in the character-emotion gallery. Use Image 4 from the supplied sample set only as a composition reference; reject pseudo-text and quantum-like decoration without a defined science mapping.
 
 When implementing from a selected generated mock, treat that image as the source of truth for layout, component anatomy, density, spacing, color, typography, visible content, and hierarchy.
