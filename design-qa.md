@@ -9,6 +9,9 @@
 - A reduced-motion path and skip control are present for the black-hole opening animation.
 - The main site includes keyboard focus styles, a collapsible mobile navigation, saved-progress failure messaging, a progress reset, video embeds, topic content, artwork credits, and prompt disclosures.
 - Favicon files and page metadata are present.
+- The opening now appears on every full page load, waits for an explicit **Enter the Atlas** action, and has no session-storage suppression or artificial auto-dismiss timer.
+- Black-hole scene, ring, content, and Qubi have explicit visible stacking layers.
+- The home route cards and five Atlas regions now carry the approved sci-fi game presentation while explanatory topic text remains readable on the warm light surface.
 
 ## Why visual review is blocked
 

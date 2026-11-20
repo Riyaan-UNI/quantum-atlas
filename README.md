@@ -19,7 +19,7 @@ A sci-fi game-based learning website prototype for the CCST9077 final project. I
 5. Open the local address Vite prints in the terminal (usually `http://localhost:5173/`).
 6. To stop the local server, focus the terminal and press **Ctrl+C**.
 
-The first visit includes a brief black-hole themed opening. Use **Skip animation** to enter immediately. Topic progress is saved in the browser on that device.
+The site opens with an interactive black-hole themed entry screen. Select **Enter the Atlas** to continue; with reduced motion enabled, the scene stays still and the same button remains available. Topic progress is saved in the browser on that device.
 
 ## Build the site
 

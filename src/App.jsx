@@ -198,14 +198,6 @@ const groups = [
   "Spacetime and information",
 ];
 
-const initialView = () => {
-  try {
-    return sessionStorage.getItem("quantum-atlas-intro-seen") === "yes" ? false : true;
-  } catch {
-    return false;
-  }
-};
-
 const getInitialProgress = () => {
   try {
     const stored = JSON.parse(localStorage.getItem("quantum-atlas-topics") || "[]");
@@ -215,7 +207,7 @@ const getInitialProgress = () => {
   }
 };
 
-function LoadingIntro({ onSkip }) {
+function LoadingIntro({ onEnter }) {
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
@@ -227,19 +219,26 @@ function LoadingIntro({ onSkip }) {
   }, []);
 
   return (
-    <section className={`loading-intro${reduced ? " is-reduced" : ""}`} aria-label="Opening Quantum Atlas">
-      <img className="loader-scene" src="/assets/black-hole-scene.png" alt="" fetchPriority="high" />
-      <img className="loader-ring" src="/assets/accretion-ring.png" alt="" />
+    <section className={`loading-intro${reduced ? " is-reduced" : ""}`} aria-label="Quantum Atlas opening screen">
+      <img className="loader-scene" src="/assets/black-hole-scene.png" alt="" fetchPriority="high" loading="eager" />
+      <img className="loader-ring" src="/assets/accretion-ring.png" alt="" fetchPriority="high" loading="eager" />
       <div className="loader-vignette" aria-hidden="true" />
       <div className="loader-copy">
-        <p className="loader-brand">Quantum Atlas</p>
-        <p className="loader-tagline">Chart the unknown. Keep asking why.</p>
-        <p className="loader-status" role="status" aria-live="polite">Opening Quantum Atlas…</p>
-        <button className="skip-loader" type="button" onClick={onSkip}>
-          {reduced ? "Enter the Atlas" : "Skip animation"}
-        </button>
+        <div className="launch-brand-block">
+          <p className="loader-brand">Quantum Atlas</p>
+          <p className="loader-tagline">Chart the unknown. Keep asking why.</p>
+        </div>
+        <div className="launch-invitation">
+          <p className="launch-coordinate">QUANTUM INFORMATION · 11 TOPICS</p>
+          <p className="loader-status">A new universe of questions is waiting.</p>
+          <p className="launch-support">Watch the films, explore the course map, or browse the art. No physics background needed.</p>
+          <button className="skip-loader" type="button" onClick={onEnter} autoFocus>
+            Enter the Atlas <span aria-hidden="true">↗</span>
+          </button>
+        </div>
       </div>
-      <img className="loader-qubi" src="/assets/qubi-3d-clean-320.png" alt="Qubi, the Quantum Atlas guide" />
+      <img className="loader-qubi" src="/assets/qubi-3d-clean-320.png" alt="Qubi, your curious guide" />
+      <p className="launch-note">Press Enter or select “Enter the Atlas” to begin.</p>
     </section>
   );
 }
@@ -312,15 +311,22 @@ function HomePage({ progress, onNavigate, onEpisode, onTopic }) {
     <main className="page-shell home-page">
       <section className="home-intro">
         <div className="intro-copy">
-          <p className="eyebrow">A sci-fi learning game about quantum information</p>
+          <p className="eyebrow">Your exploration begins here</p>
           <h1>Chart the unknown.<br /><span>Keep asking why.</span></h1>
           <p className="home-promise">Four short films and an illustrated guide to quantum information. No physics background needed.</p>
+          <p className="route-label">Choose your route</p>
           <div className="door-actions">
-            <button className="button button-primary" type="button" onClick={() => onEpisode(0)}>Watch Episode 1</button>
-            <button className="button button-secondary" type="button" onClick={() => onNavigate("atlas")}>Explore topics</button>
-            <button className="button button-text" type="button" onClick={() => onNavigate("art")}>View the artwork</button>
+            <button className="route-door route-door-primary" type="button" onClick={() => onEpisode(0)}>
+              <span className="route-door-index">01 / WATCH</span><strong>Episode 1</strong><span>The Magic Box</span>
+            </button>
+            <button className="route-door" type="button" onClick={() => onNavigate("atlas")}>
+              <span className="route-door-index">02 / EXPLORE</span><strong>Topic map</strong><span>11 course ideas</span>
+            </button>
+            <button className="route-door" type="button" onClick={() => onNavigate("art")}>
+              <span className="route-door-index">03 / VIEW</span><strong>Artwork</strong><span>Images and meaning</span>
+            </button>
           </div>
-          <p className="home-progress-note">{progress} of 11 topics marked explored</p>
+          <p className="home-progress-note">{progress} of 11 topics marked explored · no scores, no locked paths</p>
         </div>
         <div className="home-mascot-wrap">
           <img className="home-mascot" src="/assets/qubi-3d-clean-512.png" alt="Qubi, your curious guide" />
@@ -492,7 +498,7 @@ function EpisodePage({ index, onBack, onTopic, onNext }) {
   );
 }
 
-function AtlasPage({ progress, onTopic }) {
+function AtlasPage({ progress, progressIds, onTopic }) {
   const groupsWithTopics = groups.map((group) => ({
     name: group,
     items: topics.filter((topic) => topic.group === group),
@@ -503,7 +509,7 @@ function AtlasPage({ progress, onTopic }) {
       <div className="page-heading">
         <p className="eyebrow">Explore the course</p>
         <h1>Atlas</h1>
-        <p>Eleven connected topics. Start with the basics or choose any topic that interests you.</p>
+        <p>Five regions group the course ideas. Start with information foundations or roam freely; every topic stays open.</p>
         <p className="progress-summary">{progress} of 11 topics marked explored</p>
       </div>
       <div className="start-path">
@@ -524,12 +530,13 @@ function AtlasPage({ progress, onTopic }) {
             <div className="atlas-topic-list">
               {group.items.map((topic) => {
                 const topicIndex = topics.findIndex((item) => item.id === topic.id);
+                const explored = progressIds.includes(topic.id);
                 return (
-                  <button className="atlas-topic" type="button" key={topic.id} onClick={() => onTopic(topic.id)}>
+                  <button className={`atlas-topic${explored ? " is-explored" : ""}`} type="button" key={topic.id} onClick={() => onTopic(topic.id)} aria-label={`${topic.title}. ${topic.source}. ${explored ? "Marked explored" : "Not yet marked explored"}. Open topic.`}>
                     <span className="atlas-topic-count">{String(topicIndex + 1).padStart(2, "0")}</span>
                     <span className="atlas-topic-title">{topic.title}</span>
                     <span className="atlas-topic-source">{topic.source}</span>
-                    <span className="atlas-topic-open">Open</span>
+                    <span className="atlas-topic-open">{explored ? "Explored" : "Open topic"}</span>
                   </button>
                 );
               })}
@@ -573,7 +580,7 @@ function TopicPage({ topic, progressIds, canSaveProgress, onMarkExplored, onNavi
       <section className="prediction-panel" aria-labelledby="prediction-heading">
         <div className="prediction-heading">
           <div>
-            <p className="eyebrow">Optional activity · no score</p>
+        <p className="eyebrow">Optional mission activity · no score</p>
             <h2 id="prediction-heading">Make a prediction</h2>
           </div>
           <span className="activity-step">Predict <span aria-hidden="true">→</span> Reveal <span aria-hidden="true">→</span> Explain</span>
@@ -784,31 +791,13 @@ function CreditsPage() {
 }
 
 export function App() {
-  const [showIntro, setShowIntro] = useState(initialView);
+  const [showIntro, setShowIntro] = useState(true);
   const [view, setView] = useState("home");
   const [topicId, setTopicId] = useState(null);
   const [episodeIndex, setEpisodeIndex] = useState(null);
   const [progressState, setProgressState] = useState(getInitialProgress);
   const [saveAvailable, setSaveAvailable] = useState(progressState.available);
   const progressIds = progressState.ids;
-
-  useEffect(() => {
-    if (!showIntro) return undefined;
-    let timer;
-    try {
-      if (sessionStorage.getItem("quantum-atlas-intro-seen") === "yes") {
-        setShowIntro(false);
-        return undefined;
-      }
-      sessionStorage.setItem("quantum-atlas-intro-seen", "yes");
-    } catch {
-      setShowIntro(false);
-      return undefined;
-    }
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduced) timer = window.setTimeout(() => setShowIntro(false), 1550);
-    return () => window.clearTimeout(timer);
-  }, [showIntro]);
 
   const navigate = (nextView, nextEpisode = null) => {
     setTopicId(null);
@@ -853,14 +842,14 @@ export function App() {
   return (
     <>
       {showIntro ? (
-        <LoadingIntro onSkip={() => setShowIntro(false)} />
+        <LoadingIntro onEnter={() => setShowIntro(false)} />
       ) : (
         <div className="app-frame">
           <Header active={view === "topic" ? "atlas" : view === "episode" ? "episodes" : view} progress={progress} onNavigate={navigate} />
           {view === "home" && <HomePage progress={progress} onNavigate={navigate} onEpisode={(index) => navigate("episode", index)} onTopic={openTopic} />}
           {view === "episodes" && <EpisodeIndex onOpenEpisode={(index) => navigate("episode", index)} onTopic={openTopic} />}
           {view === "episode" && <EpisodePage index={episodeIndex} onBack={() => navigate("episodes")} onTopic={openTopic} onNext={(index) => navigate("episode", index)} />}
-          {view === "atlas" && <AtlasPage progress={progress} onTopic={openTopic} />}
+          {view === "atlas" && <AtlasPage progress={progress} progressIds={progressIds} onTopic={openTopic} />}
           {view === "topic" && currentTopic && <TopicPage topic={currentTopic} progressIds={progressIds} canSaveProgress={saveAvailable} onMarkExplored={markExplored} onNavigate={navigate} onTopic={openTopic} />}
           {view === "art" && <ArtPage />}
           {view === "glossary" && <GlossaryPage />}
