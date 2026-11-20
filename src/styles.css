@@ -4,7 +4,7 @@
   color-scheme: light;
   font-family: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
   color: #19252b;
-  background: #f3eddf;
+  background: #07131a;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   --ink: #19252b;
@@ -180,7 +180,7 @@ img { max-inline-size: 100%; }
 .loading-intro.is-reduced .loader-ring,
 .loading-intro.is-reduced .loader-qubi { animation: none; }
 
-.app-frame { min-block-size: 100vh; background: var(--ivory); }
+.app-frame { min-block-size: 100vh; background: var(--deep-space); }
 
 .site-header {
   position: sticky;
