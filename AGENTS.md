@@ -13,6 +13,11 @@ Before making substantial visual changes, use the Product Design plugin's `get-c
 - Use `rem`/`em`, fluid layout sizing, and intrinsic `aspect-ratio` for responsive geometry. Avoid fixed-pixel page/card dimensions.
 - Keep the interface language plain, the science source-grounded in CCST9077 lectures, and the core `Predict → Reveal → Explain` interaction optional and non-punitive.
 - Do not use Figma or hand-drawn SVGs. Prefer real raster assets or an appropriate icon library; any future course artwork prompts should be credited accurately with the image-making tool used.
+- The Art page leads with a user-controlled slideshow, then shows the full current showcase-image list and Qubi's six reference-sheet emotions. Do not auto-advance; label “Dizzy” as playful character art, not a depiction of superposition.
+- Prompt 7 now calls for 11 lecture-specific concept-art prompts. The existing black-hole artwork remains the site's hero; the team will generate and review the 11 gallery pieces.
+- After a visitor marks a topic as explored, offer a direct button to the next topic in course order. The last topic returns to the Atlas; no content is locked.
+- Credit the four members using the names and contribution record supplied by the user and carried forward from the previous prototype. Label those roles as the prior record so the team can revise them if their responsibilities change.
+- Quantum concept art should make the lecture phenomenon—not Qubi or generic retro hardware—the focal point. Qubi is optional and is kept separate in the character-emotion gallery. Use Image 4 from the supplied sample set only as a composition reference; reject pseudo-text and quantum-like decoration without a defined science mapping.
 
 When implementing from a selected generated mock, treat that image as the source of truth for layout, component anatomy, density, spacing, color, typography, visible content, and hierarchy.
 

@@ -552,6 +552,8 @@ function TopicPage({ topic, progressIds, canSaveProgress, onMarkExplored, onNavi
   const [selected, setSelected] = useState(null);
   const [revealed, setRevealed] = useState(false);
   const alreadyMarked = progressIds.includes(topic.id);
+  const topicIndex = topics.findIndex((item) => item.id === topic.id);
+  const nextTopic = topics[topicIndex + 1];
 
   useEffect(() => {
     setSelected(null);
@@ -634,9 +636,20 @@ function TopicPage({ topic, progressIds, canSaveProgress, onMarkExplored, onNavi
           <p>{alreadyMarked ? "You marked this topic explored." : "After reading, you can mark this topic explored."}</p>
           {!canSaveProgress && <p className="storage-note">Progress is not being saved on this device. You can still explore all topics.</p>}
         </div>
-        <button className="button button-secondary" type="button" disabled={alreadyMarked} onClick={() => onMarkExplored(topic.id)}>
-          {alreadyMarked ? "Marked explored" : "Mark topic explored"}
-        </button>
+        <div className="topic-progress-actions">
+          <button className="button button-secondary" type="button" disabled={alreadyMarked} onClick={() => onMarkExplored(topic.id)}>
+            {alreadyMarked ? "Marked explored" : "Mark topic explored"}
+          </button>
+          {alreadyMarked && (nextTopic ? (
+            <button className="button button-primary" type="button" onClick={() => onTopic(nextTopic.id)}>
+              Next topic: {nextTopic.title} <span aria-hidden="true">→</span>
+            </button>
+          ) : (
+            <button className="button button-primary" type="button" onClick={() => onNavigate("atlas")}>
+              Return to the topic map <span aria-hidden="true">→</span>
+            </button>
+          ))}
+        </div>
       </section>
       <p className="source-line">The course lecture is the primary source. This short explanation is a prototype draft for team science review.</p>
     </main>
@@ -644,6 +657,48 @@ function TopicPage({ topic, progressIds, canSaveProgress, onMarkExplored, onNavi
 }
 
 function ArtPage() {
+  const artworks = [
+    {
+      title: "Black-hole loading scene",
+      image: "/assets/black-hole-scene.png",
+      alt: "A dark event horizon with a luminous amber and blue accretion ring against a star field.",
+      caption: "A story-world threshold for the Atlas, used as atmosphere rather than a scientific diagram.",
+      credit: "Generated with OpenAI Image Generation · interface atmosphere.",
+    },
+    {
+      title: "Qubi character reference",
+      image: "/assets/qubi-reference-sheet.png",
+      alt: "Qubi character sheet with front, side, and back views, plus six facial expressions.",
+      caption: "The team's model sheet sets Qubi's shape, colors, clothing, and expression range.",
+      credit: "Provided by the project team · original Qubi reference sheet.",
+    },
+    {
+      title: "Qubi 3D-style render",
+      image: "/assets/qubi-3d-clean-512.png",
+      alt: "A friendly 3D-style Qubi render wearing a forest-green HKU shirt and raising one hand.",
+      caption: "A polished mascot render guided by the supplied model sheet.",
+      credit: "Generated with OpenAI Image Generation from the team's supplied character reference.",
+    },
+    {
+      title: "Accretion-ring layer",
+      image: "/assets/accretion-ring.png",
+      alt: "A tilted amber-and-blue luminous ring layer on transparency.",
+      caption: "A separate visual layer used to animate the loading-screen scene.",
+      credit: "Generated with OpenAI Image Generation · interface animation asset.",
+    },
+  ];
+  const emotions = [
+    { name: "Happy", position: "0%", use: "Welcoming a visitor or celebrating a small discovery." },
+    { name: "Curious", position: "20%", use: "Inviting the visitor to ask a question." },
+    { name: "Surprised", position: "40%", use: "Reacting to an unexpected result." },
+    { name: "Thinking", position: "60%", use: "Pausing before an explanation or prediction." },
+    { name: "Excited", position: "80%", use: "Sharing an energetic moment of discovery." },
+    { name: "Dizzy", position: "100%", use: "A playful expression for uncertainty; not a depiction of superposition." },
+  ];
+  const [activeArtwork, setActiveArtwork] = useState(0);
+  const changeArtwork = (step) => setActiveArtwork((current) => (current + step + artworks.length) % artworks.length);
+  const artwork = artworks[activeArtwork];
+
   return (
     <main className="page-shell content-page art-page">
       <div className="page-heading">
@@ -651,59 +706,66 @@ function ArtPage() {
         <h1>Artwork</h1>
         <p>See how the project uses visual storytelling to introduce quantum information.</p>
       </div>
-      <article className="art-feature">
-        <img src="/assets/qubi-reference-sheet.png" alt="Qubi character sheet showing front, three-quarter, side, and back views, with happy, curious, surprised, thinking, excited, and dizzy expressions." />
-        <div className="art-feature-copy">
-          <p className="eyebrow">Character reference</p>
-          <h2>Meet Qubi</h2>
-          <p>The supplied model sheet is the visual reference for Qubi's cream CRT head, dark screen, green pixel face, and forest-green shirt.</p>
-          <p className="image-credit">Provided by the project team · Original Qubi reference sheet</p>
+      <section className="art-carousel" aria-label="Featured artwork slideshow">
+        <div className="art-carousel-stage" aria-live="polite" aria-atomic="true">
+          <img key={artwork.image} src={artwork.image} alt={artwork.alt} />
+          <div className="art-carousel-copy">
+            <p className="eyebrow">Featured image · {String(activeArtwork + 1).padStart(2, "0")} / {String(artworks.length).padStart(2, "0")}</p>
+            <h2>{artwork.title}</h2>
+            <p>{artwork.caption}</p>
+            <p className="image-credit">{artwork.credit}</p>
+          </div>
         </div>
-      </article>
-      <section className="prototype-art" aria-labelledby="prototype-art-title">
-        <div className="prototype-art-heading">
-          <p className="eyebrow">Prototype visuals</p>
-          <h2 id="prototype-art-title">Images that shape the interface</h2>
-          <p>These are website assets, not course diagrams. Their tools and prompts are listed openly. The upcoming lecture-art series is still for the team to create with Google NanoBanana.</p>
+        <div className="art-carousel-controls" aria-label="Slideshow controls">
+          <button className="button button-secondary" type="button" onClick={() => changeArtwork(-1)} aria-label="Previous artwork">← Previous</button>
+          <div className="art-carousel-dots" role="group" aria-label="Choose an artwork slide">
+            {artworks.map((item, index) => (
+              <button key={item.title} type="button" className={`art-carousel-dot${index === activeArtwork ? " is-active" : ""}`} aria-label={`Show ${item.title}`} aria-current={index === activeArtwork ? "true" : undefined} onClick={() => setActiveArtwork(index)} />
+            ))}
+          </div>
+          <button className="button button-secondary" type="button" onClick={() => changeArtwork(1)} aria-label="Next artwork">Next →</button>
         </div>
-        <article className="prototype-art-entry">
-          <img src="/assets/black-hole-scene.png" alt="A dark event horizon with a luminous amber and blue accretion ring against a star field; used as atmosphere for the website's loading animation." />
-          <div>
-            <h3>Black-hole loading scene</h3>
-            <p className="image-credit">Generated with OpenAI Image Generation · interface atmosphere, not a scientific diagram.</p>
-            <details className="prompt-disclosure">
-              <summary>View the prompt</summary>
-              <p>A cinematic but restrained black-hole scene: large central dark event horizon, horizontal tilted luminous accretion ring with amber and cool blue bands, subtle gravitational lensing, deep navy-black starfield with restrained stars. Keep the black hole centered and leave the upper and lower center relatively quiet for later live website text and controls. The image is a decorative loading-screen atmosphere, not a scientific diagram or a claim that a black hole is a portal. No beams that suggest messages travel through the hole. Compose to crop gracefully on wide desktop and vertical mobile, keeping the dark center visible.</p>
-            </details>
-          </div>
-        </article>
-        <article className="prototype-art-entry">
-          <img className="ring-preview" src="/assets/accretion-ring.png" alt="A tilted amber-and-blue accretion ring on a transparent background, layered over the black-hole loading scene." />
-          <div>
-            <h3>Accretion-ring layer</h3>
-            <p className="image-credit">Generated with OpenAI Image Generation · animation layer for the loading scene.</p>
-            <details className="prompt-disclosure">
-              <summary>View the prompt</summary>
-              <p>A luminous, thin tilted oval accretion-ring streak with amber and cool blue light, matching the black-hole loading scene. Transparent background including the interior of the oval and all surrounding space; no black disk, stars, landscape, text, Qubi, symbols, border, or frame. Long directional streaks, modest brightness, crisp edges, overlaid on dark navy. This is interface art, not a scientific diagram.</p>
-            </details>
-          </div>
-        </article>
-        <article className="prototype-art-entry">
-          <img className="qubi-preview" src="/assets/qubi-3d-clean-512.png" alt="A friendly 3D-style Qubi render based on the supplied model sheet, wearing the green shirt and raising one hand." />
-          <div>
-            <h3>Qubi 3D-style prototype render</h3>
-            <p className="image-credit">Generated with OpenAI Image Generation from the team's supplied character reference.</p>
-            <details className="prompt-disclosure">
-              <summary>View the prompt</summary>
-              <p>Create one full-body 3D-style mascot render of Qubi for Quantum Atlas, matching the supplied character sheet: rounded vintage cream CRT head, dark screen, bright green pixel eyes and smile, small green indicator button, short rounded arms and legs, deep forest-green shirt marked HKU, and white rounded gloves and shoes. Use a friendly curious three-quarter pose with one hand raised. Preserve the reference proportions and simple expression; add no antennae, armor, or accessories. Render as a polished soft 3D toy with warm diffuse light and transparent background.</p>
-            </details>
-          </div>
-        </article>
       </section>
-      <div className="art-collection-note">
-        <h2>The lecture-art gallery is ready for the team's images</h2>
-        <p>As the team creates its NanoBanana artwork, each image can include a short caption, its lecture connection, a visible Google NanoBanana credit, and the full prompt.</p>
-      </div>
+
+      <section className="prototype-art" aria-labelledby="all-art-title">
+        <div className="prototype-art-heading">
+          <p className="eyebrow">Image archive</p>
+          <h2 id="all-art-title">All current showcase images</h2>
+          <p>Browse the complete set currently included in the prototype. Eleven lecture-linked concept artworks are planned; this archive will expand as the team generates and reviews them.</p>
+        </div>
+        <div className="artwork-grid">
+          {artworks.map((item) => (
+            <article className="artwork-card" key={item.title}>
+              <img src={item.image} alt={item.alt} />
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.caption}</p>
+                <p className="image-credit">{item.credit}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="art-emotions" aria-labelledby="qubi-emotions-title">
+        <div className="section-heading-row">
+          <div>
+            <p className="eyebrow">Qubi's character</p>
+            <h2 id="qubi-emotions-title">Six ways Qubi reacts</h2>
+          </div>
+          <p>Use these expressions as friendly story cues, not as literal pictures of quantum states.</p>
+        </div>
+        <div className="emotion-grid">
+          {emotions.map((emotion) => (
+            <article className="emotion-card" key={emotion.name}>
+              <div className="emotion-image" role="img" aria-label={`Qubi's ${emotion.name.toLowerCase()} expression`} style={{ backgroundPosition: `${emotion.position} 65%` }} />
+              <h3>{emotion.name}</h3>
+              <p>{emotion.use}</p>
+            </article>
+          ))}
+        </div>
+        <p className="metaphor-note"><strong>Metaphor note:</strong> Qubi's “Dizzy” expression is playful character art. Superposition is a quantum state, not a feeling or a visible spinning face.</p>
+      </section>
     </main>
   );
 }
@@ -765,12 +827,12 @@ function CreditsPage() {
       </div>
       <section className="credits-section">
         <h2>Team contributions</h2>
-        <p>Replace these prompts with each member's actual name and substantial contribution before submission.</p>
+        <p>These roles are carried over from the previous prototype's contribution record; update them if responsibilities change during this version.</p>
         <ul className="contribution-list">
-          <li><strong>Team member 1</strong><span>Add name and specific contribution.</span></li>
-          <li><strong>Team member 2</strong><span>Add name and specific contribution.</span></li>
-          <li><strong>Team member 3</strong><span>Add name and specific contribution.</span></li>
-          <li><strong>Team member 4</strong><span>Add name and specific contribution.</span></li>
+          <li><strong>Patan Mohammed Riyaan (Riyaan)</strong><span>Website development, video editing, and Qubi mascot work.</span></li>
+          <li><strong>Lau Long Yat Damian (Damian)</strong><span>Voice of Qubi in the videos, chief video editing, video script-writing, and Qubi mascot invention.</span></li>
+          <li><strong>Doelvik Markus Skjerstad (Markus)</strong><span>Speaking in the videos and video script-writing.</span></li>
+          <li><strong>Sun Siyan (Cynthia)</strong><span>Video script-writing and speaking in the videos.</span></li>
         </ul>
       </section>
       <section className="credits-section" id="ai-use">
