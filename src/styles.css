@@ -563,6 +563,15 @@ h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; letter-spacin
 }
 
 /* Quantum Atlas visual pass: a cinematic game world around a calm reading surface. */
+body { background: var(--deep-space); }
+
+html:has(.loading-intro),
+body:has(.loading-intro) {
+  block-size: 100svh;
+  min-block-size: 0;
+  overflow: hidden;
+}
+
 .app-frame {
   min-block-size: 100vh;
   color: var(--white);
@@ -583,7 +592,10 @@ h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; letter-spacin
 
 .loading-intro {
   display: block;
+  block-size: 100vh;
+  block-size: 100svh;
   min-block-size: 100svh;
+  overflow: hidden;
   background: #040a10;
 }
 
@@ -606,7 +618,8 @@ h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; letter-spacin
   z-index: 3;
   display: flex;
   inline-size: min(100% - clamp(2rem, 8vw, 8rem), 88rem);
-  min-block-size: 100svh;
+  block-size: 100%;
+  min-block-size: 0;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
@@ -618,7 +631,7 @@ h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; letter-spacin
 .launch-brand-block { display: grid; gap: 0.5rem; }
 .loader-brand { font-size: clamp(2rem, 4vw, 3.25rem); }
 .loader-tagline { margin: 0; color: var(--mist); font-size: clamp(1rem, 1.7vw, 1.25rem); }
-.launch-invitation { inline-size: min(100%, 38rem); margin-block: auto; padding-block: clamp(3rem, 12vh, 9rem); }
+.launch-invitation { inline-size: min(100%, 38rem); margin-block: auto; padding-block: clamp(1.25rem, 5vh, 4rem); }
 .launch-coordinate { margin: 0 0 0.8rem; color: var(--green); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.14em; }
 .loader-status { max-inline-size: 15ch; margin: 0; font-size: clamp(2rem, 5.3vw, 4.5rem); line-height: 1.05; }
 .launch-support { max-inline-size: 38rem; margin-block: 1rem 1.5rem; color: var(--white); font-size: clamp(1rem, 1.6vw, 1.2rem); }
@@ -638,11 +651,22 @@ h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; letter-spacin
 .skip-loader:hover { background: var(--white); color: var(--deep-space); transform: translateY(-0.125rem); }
 .loader-qubi {
   z-index: 4;
-  inline-size: clamp(9rem, 19vw, 18rem);
+  inline-size: clamp(8rem, 16vw, 15rem);
+  max-block-size: 30svh;
   inset-inline-end: clamp(1rem, 5vw, 5rem);
   inset-block-end: clamp(1rem, 4vh, 3rem);
 }
 .launch-note { position: absolute; z-index: 4; inset-inline-start: max(1rem, calc((100vw - 88rem) / 2)); inset-block-end: 1.5rem; max-inline-size: 60ch; margin: 0; color: var(--mist); font-size: 0.85rem; }
+.progress-settings {
+  padding: 0.85rem 1rem;
+  border: 0.0625rem solid rgba(183, 200, 198, 0.2);
+  border-radius: var(--radius-small);
+  background: rgba(16, 36, 42, 0.8);
+  color: var(--mist);
+}
+.progress-settings summary { color: var(--white); }
+.progress-settings p { color: var(--mist); }
+.progress-settings .text-link { color: var(--green); }
 
 .home-page {
   inline-size: 100%;
@@ -767,11 +791,11 @@ h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; letter-spacin
 
 @media (max-width: 40rem) {
   .loader-vignette { background: linear-gradient(180deg, rgba(4, 10, 16, 0.77), rgba(4, 10, 16, 0.28) 45%, rgba(4, 10, 16, 0.86)); }
-  .loader-copy { inline-size: calc(100% - 2rem); min-block-size: 100svh; justify-content: flex-start; gap: 0; padding-block: 1.5rem 2rem; }
+  .loader-copy { inline-size: calc(100% - 2rem); block-size: 100%; min-block-size: 0; justify-content: flex-start; gap: 0; padding-block: 1.5rem 2rem; }
   .launch-brand-block { gap: 0.25rem; }
   .loader-brand { font-size: 1.8rem; }
   .loader-tagline { max-inline-size: 26ch; font-size: 0.95rem; }
-  .launch-invitation { margin-block: auto 9rem; padding-block: 1rem; }
+  .launch-invitation { margin-block: auto 8rem; padding-block: 0.75rem; }
   .launch-coordinate { font-size: 0.72rem; }
   .loader-status { max-inline-size: 12ch; font-size: clamp(2.1rem, 10vw, 3.2rem); }
   .launch-support { max-inline-size: 31ch; font-size: 1rem; }
@@ -797,6 +821,24 @@ h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; letter-spacin
   .atlas-groups { grid-template-columns: minmax(0, 1fr); }
   .atlas-group { padding: 0.75rem; }
   .site-footer { padding-inline: 1rem; }
+}
+
+@media (max-height: 45rem) {
+  .loader-copy { padding-block: 1rem; gap: 0.75rem; }
+  .launch-invitation { padding-block: 0.75rem; }
+  .launch-support { margin-block: 0.5rem 0.75rem; line-height: 1.4; }
+  .loader-qubi { inline-size: clamp(6rem, 14vh, 8rem); max-block-size: 23svh; inset-inline-end: 1rem; inset-block-end: 1rem; }
+  .launch-note { inset-block-end: 0.75rem; font-size: 0.75rem; }
+}
+
+@media (max-width: 40rem) and (max-height: 48rem) {
+  .loader-copy { padding-block: 0.85rem; }
+  .loader-brand { font-size: 1.55rem; }
+  .loader-tagline { font-size: 0.84rem; }
+  .launch-invitation { margin-block-end: 5.75rem; padding-block: 0.35rem; }
+  .loader-status { font-size: clamp(1.7rem, 8.5vw, 2.25rem); }
+  .launch-support { max-inline-size: 30ch; margin-block: 0.4rem 0.65rem; font-size: 0.9rem; }
+  .skip-loader { min-block-size: 2.8rem; padding: 0.6rem 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -12,10 +12,11 @@
 - The opening now appears on every full page load, waits for an explicit **Enter the Atlas** action, and has no session-storage suppression or artificial auto-dismiss timer.
 - Black-hole scene, ring, content, and Qubi have explicit visible stacking layers.
 - The home route cards and five Atlas regions now carry the approved sci-fi game presentation while explanatory topic text remains readable on the warm light surface.
+- Inspected the local Chrome preview at a compact browser window size. The opening screen now fits the visible area; the entry control and Qubi remain in view. The progress settings and page background were adjusted after reviewing the supplied screenshots.
 
 ## Why visual review is blocked
 
-Local browser access is unavailable in this Codex session. I could not inspect rendered pages at desktop, tablet, phone, or zoomed layouts, or confirm video and image behavior in a live browser. The responsive design is therefore not marked visually passed.
+Only the compact local preview was visually inspected in this pass. Desktop, tablet, small-phone, landscape-phone, 200–400% zoom, keyboard traversal, and the lower-page contrast fixes still need a full human review. The responsive design is therefore not marked visually passed.
 
 ## Review before presentation
 
