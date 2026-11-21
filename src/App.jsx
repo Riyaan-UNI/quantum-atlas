@@ -1190,7 +1190,7 @@ function CreditsPage() {
     {
       name: "Damian",
       fullName: "Lau Long Yat Damian",
-      portrait: "assets/crew/damian.png",
+      portrait: "assets/crew/damian-face.jpg",
       roles: ["Original project idea", "Scripts 1 and 2", "Qubi's voice and mascot design", "Video editing"],
       evidence: "mascot",
     },
@@ -1353,7 +1353,7 @@ function CreditsPage() {
               <div className="crew-card-copy">
                 <p className="crew-index">CREW MEMBER {String(index + 1).padStart(2, "0")}</p>
                 <div className="crew-identity">
-                  {member.portrait && <img className="crew-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, a member of the Quantum Atlas team`} loading="lazy" />}
+                  {member.portrait && <button className="crew-avatar-trigger" type="button" onClick={() => setEnlargedPortrait(member)} aria-label={`Enlarge ${member.name}'s portrait`}><img className="crew-portrait" src={assetUrl(member.portrait)} alt="" loading="lazy" /><span aria-hidden="true">↗</span></button>}
                   <div><h3>{member.name}</h3><p className="crew-full-name">{member.fullName}</p></div>
                 </div>
                 <div className="crew-role-group">
