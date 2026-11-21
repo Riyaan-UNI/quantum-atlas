@@ -16,7 +16,7 @@ The Atlas contains eleven course topics arranged in five regions:
 4. Interpretation and popular claims
 5. Spacetime and information
 
-The Episodes area links three published videos. Episode 4, **The Un-Copyable Secret**, has a supplied script but no video link yet. The first three episode pages include readable transcripts based on the scripts used for those videos. Short science notes accompany the films to clarify metaphors and qualify claims for first-time viewers.
+The Episodes area links all four published videos. Episode 4, **The Un-Copyable Secret**, covers no-cloning and quantum cryptography. Episodes 1–3 include readable transcripts based on the original scripts; Episode 4 requests YouTube captions when available, but does not currently include a separate readable transcript. Short science notes accompany the films to clarify metaphors and qualify claims for first-time viewers.
 
 The Art page presents the team's reviewed concept-art collection, with an automatic slideshow, a browsable image grid, full-size image viewing, prompts, and Qubi's expression sheet. The images are illustrative concept art, not scientific diagrams.
 
@@ -114,7 +114,7 @@ Design decisions and the science/media review are maintained in the sibling `Des
 
 ## Content maintenance
 
-- **Episode links and topic summaries:** update the `videos` and `topics` data in `src/App.jsx`.
+- **Episode links and topic summaries:** update the `videos` and `topics` data in `src/App.jsx`. The fourth video uses YouTube ID `Zwxx9Q6Vo10`.
 - **Episode transcripts:** edit the supplied-script text files in `src/content/transcripts/`. The page presents those files as readable text; captions in the embedded YouTube player are requested when available.
 - **Artwork:** update image metadata, prompts, descriptions, and tool attribution in `src/content/artworks.js`. Store the corresponding images under `public/assets/concept-art/`.
 - **Story content:** update `src/story/scenes.js`; keep scene copy and state rules aligned.

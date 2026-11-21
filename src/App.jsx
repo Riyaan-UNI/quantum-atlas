@@ -32,12 +32,12 @@ const videos = [
     scienceNote: "For the stated CHSH game with equally likely questions, the classical limit is 75% and the ideal quantum rate is about 85%. A Bell violation rules out local-realistic models under the experiment's assumptions; it does not literally break reality.",
   },
   {
-    id: "episode-4",
+    id: "Zwxx9Q6Vo10",
     title: "The Un-Copyable Secret",
     hook: "Why can't an unknown quantum state be copied perfectly?",
-    runtime: "Script supplied · video link needed",
+    runtime: "Video",
     topics: ["qubits", "cryptography"],
-    forthcoming: true,
+    scienceNote: "The no-cloning theorem rules out perfectly copying an arbitrary unknown quantum state. It does not mean classical information cannot be copied, or that every quantum state is impossible to reproduce when it is known.",
   },
 ];
 
@@ -493,7 +493,7 @@ function EpisodeIndex({ onOpenEpisode, onTopic }) {
               {String(index + 1).padStart(2, "0")}
             </motion.button>
             <div className="episode-row-main">
-              <p className="eyebrow">{episode.forthcoming ? "Script supplied · video link needed" : episode.runtime}</p>
+              <p className="eyebrow">{episode.runtime}</p>
               <h2>{episode.title}</h2>
               <p>{episode.hook}</p>
               <div className="topic-chips" aria-label="Related topics">
@@ -504,16 +504,12 @@ function EpisodeIndex({ onOpenEpisode, onTopic }) {
               </div>
             </div>
             <div className="episode-row-action">
-              {episode.forthcoming ? (
-                <button className="text-link" type="button" onClick={() => onOpenEpisode(index)}>Episode details</button>
-              ) : (
-                <button className="button button-secondary" type="button" onClick={() => onOpenEpisode(index)}>Watch</button>
-              )}
+              <button className="button button-secondary" type="button" onClick={() => onOpenEpisode(index)}>Watch</button>
             </div>
           </motion.article>
         ))}
       </div>
-      <p className="release-note">Only three playable links are connected in this prototype. Add the fourth video URL before presenting the collection as four available films.</p>
+      <p className="release-note">All four episodes are available to watch. Readable transcripts are provided for Episodes 1–3; Episode 4 requests captions from YouTube when available.</p>
     </main>
   );
 }
@@ -521,30 +517,8 @@ function EpisodeIndex({ onOpenEpisode, onTopic }) {
 function EpisodePage({ index, onBack, onTopic, onNext }) {
   const episode = videos[index];
   if (!episode) return null;
-  if (episode.forthcoming) {
-    return (
-      <main className="page-shell content-page">
-        <button className="back-link" type="button" onClick={onBack}>← Episodes</button>
-        <div className="page-heading">
-          <p className="eyebrow">Episode 4 · script supplied</p>
-          <h1>{episode.title}</h1>
-          <p>The video link has not been added yet. The topic pages are available now.</p>
-        </div>
-        <QubiGuide mood="thinking" message="This episode's script is ready; follow its questions into the related topic pages." compact />
-        <div className="availability-panel">
-          <h2>Explore the related ideas</h2>
-          <p>No-cloning, quantum money, and quantum key distribution connect to these topics.</p>
-          <div className="inline-actions">
-            <button className="button button-primary" type="button" onClick={() => onTopic("qubits")}>Explore no-cloning</button>
-            <button className="button button-secondary" type="button" onClick={() => onTopic("cryptography")}>Explore quantum key distribution</button>
-          </div>
-        </div>
-      </main>
-    );
-  }
-
   const associated = episode.topics.map((id) => topics.find((topic) => topic.id === id)).filter(Boolean);
-  const next = (index + 1) % 3;
+  const next = (index + 1) % videos.length;
 
   return (
     <main className={`page-shell content-page episode-page${index === 1 ? " is-spooky" : ""}`}>
@@ -568,7 +542,7 @@ function EpisodePage({ index, onBack, onTopic, onNext }) {
       {episode.scienceNote && <aside className="episode-science-note" aria-label="Science note"><strong>Science note</strong><p>{episode.scienceNote}</p></aside>}
       <div className="transcript-panel">
         <p className="eyebrow">Captions and transcript</p>
-        <p>The player requests captions when the video provides them. The transcript below follows the script supplied by the team.</p>
+        <p>{episodeTranscripts[episode.id] ? "The player requests captions when the video provides them. The transcript below follows the script supplied by the team." : "The player requests captions when the video provides them. A readable transcript is not currently included for this episode."}</p>
         <a href={`https://www.youtube.com/watch?v=${episode.id}`} target="_blank" rel="noreferrer">Open this episode on YouTube</a>
       </div>
       {episodeTranscripts[episode.id] && <details className="episode-transcript">
@@ -1208,6 +1182,7 @@ function CreditsPage() {
     {
       name: "Riyaan",
       fullName: "Patan Mohammed Riyaan",
+      portrait: "assets/crew/riyaan.jpg",
       roles: ["Website development", "Video editing", "Qubi mascot work"],
       newRoles: ["Quantum Atlas creative direction and iterative design", "Camera, teleprompter, and music work", "Concept-art prompts and gallery curation", "Plot prompt and story development"],
       evidence: "website",
@@ -1234,7 +1209,7 @@ function CreditsPage() {
       evidence: "scripts",
     },
   ];
-  const releasedVideos = videos.filter((video) => !video.forthcoming);
+  const releasedVideos = videos;
 
   useEffect(() => {
     if (reduced) {
@@ -1282,7 +1257,7 @@ function CreditsPage() {
   }, [enlargedPortrait]);
 
   const memberEvidence = (member) => {
-    if (member.portrait) return <div className={`crew-reveal-portrait-wrap${member.name === "Damian" ? " is-damian" : ""}`}><img className="crew-reveal-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><button className="crew-portrait-zoom" type="button" onClick={() => setEnlargedPortrait(member)} aria-label={`Enlarge ${member.name}'s portrait`}><img className="crew-reveal-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, a member of the Quantum Atlas team`} /></button></div>;
+    if (member.portrait && member.name !== "Riyaan") return <div className="crew-reveal-portrait-wrap"><img className="crew-reveal-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><button className="crew-portrait-zoom" type="button" onClick={() => setEnlargedPortrait(member)} aria-label={`Enlarge ${member.name}'s portrait`}><img className={`crew-reveal-portrait${member.name === "Damian" ? " crew-portrait-header-damian" : ""}`} src={assetUrl(member.portrait)} alt={`${member.name}, a member of the Quantum Atlas team`} /></button></div>;
     if (member.evidence === "website") return <img className="crew-reveal-art" src={assetUrl("assets/black-hole-scene.png")} alt="The black-hole artwork used for the website experience." />;
     if (member.evidence === "mascot") return <img className="crew-reveal-art crew-reveal-mascot" src={assetUrl("assets/qubi-reference-sheet.png")} alt="The Qubi model and expression sheet." />;
     if (member.evidence === "speaker") return <div className="crew-reveal-video-strip">{releasedVideos.map((video) => <img key={video.id} src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} alt={`Video still from ${video.title}`} />)}</div>;
@@ -1305,7 +1280,7 @@ function CreditsPage() {
               <AnimatePresence mode="wait">
                 <motion.article className="crew-reveal-card" key={teamMembers[activeCrew].name} initial={{ opacity: 0, y: 28, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, x: 100, y: -30, rotate: 3, scale: 0.98 }} transition={{ duration: 0.72, ease: [0.22, 0.8, 0.25, 1] }} aria-live="polite">
                   <p className="eyebrow">Crew member {String(activeCrew + 1).padStart(2, "0")} / 04</p>
-                  <div className={`crew-reveal-evidence${teamMembers[activeCrew].name === "Damian" ? " crew-evidence-damian" : ""}`}>{memberEvidence(teamMembers[activeCrew])}</div>
+                  <div className="crew-reveal-evidence">{memberEvidence(teamMembers[activeCrew])}</div>
                   <h2>{teamMembers[activeCrew].name}</h2>
                   <p>{teamMembers[activeCrew].fullName}</p>
                   <span className="crew-reveal-role">{[...teamMembers[activeCrew].roles, ...(teamMembers[activeCrew].newRoles ?? [])].join(" · ")}</span>
@@ -1346,8 +1321,8 @@ function CreditsPage() {
         <div className="crew-grid">
           {teamMembers.map((member, index) => (
             <motion.article className={`crew-card crew-card-${member.evidence}`} key={member.name} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.42, delay: index * 0.06 }}>
-              <div className={`crew-evidence${member.name === "Damian" ? " crew-evidence-damian" : ""}`}>
-                {member.portrait && <div className={`crew-card-portrait-wrap${member.name === "Damian" ? " is-damian" : ""}`}><img className="crew-card-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><button className="crew-portrait-zoom" type="button" onClick={() => setEnlargedPortrait(member)} aria-label={`Enlarge ${member.name}'s portrait`}><img className="crew-card-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, member of the Quantum Atlas team`} loading="lazy" /><span className="crew-portrait-zoom-hint" aria-hidden="true">View portrait ↗</span></button></div>}
+              <div className="crew-evidence">
+                {member.portrait && member.name !== "Riyaan" && <div className="crew-card-portrait-wrap"><img className="crew-card-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><button className="crew-portrait-zoom" type="button" onClick={() => setEnlargedPortrait(member)} aria-label={`Enlarge ${member.name}'s portrait`}><img className={`crew-card-portrait${member.name === "Damian" ? " crew-portrait-header-damian" : ""}`} src={assetUrl(member.portrait)} alt={`${member.name}, member of the Quantum Atlas team`} loading="lazy" /><span className="crew-portrait-zoom-hint" aria-hidden="true">View portrait ↗</span></button></div>}
                 {member.evidence === "website" && (
                   <div className="crew-site-preview">
                     <img src={assetUrl("assets/black-hole-scene.png")} alt="The dark cinematic black-hole scene used in the Quantum Atlas experience." />
@@ -1358,16 +1333,16 @@ function CreditsPage() {
                     </div>
                   </div>
                 )}
-                {!member.portrait && member.evidence === "mascot" && (
+                {member.name !== "Riyaan" && !member.portrait && member.evidence === "mascot" && (
                   <img className="crew-mascot-sheet" src={assetUrl("assets/qubi-reference-sheet.png")} alt="The team's Qubi model sheet, showing mascot poses and six expressions." />
                 )}
-                {!member.portrait && member.evidence === "speaker" && (
+                {member.name !== "Riyaan" && !member.portrait && member.evidence === "speaker" && (
                   <div className="crew-markus-artwork">
                     <img src={assetUrl(`assets/concept-art/${conceptArt.find((artwork) => artwork.topicId === "bell-game")?.filename ?? conceptArt[0].filename}`)} alt="Concept artwork for the Bell tests and CHSH game." loading="lazy" />
                     <span className="crew-evidence-label">BELL TESTS · CHSH GAME</span>
                   </div>
                 )}
-                {!member.portrait && member.evidence === "scripts" && (
+                {member.name !== "Riyaan" && !member.portrait && member.evidence === "scripts" && (
                   <div className="crew-script-page">
                     <p className="script-page-kicker">FROM THE EPISODE SCRIPT</p>
                     <blockquote>“Qubi: Ooh, I love secrets!”</blockquote>
@@ -1456,7 +1431,7 @@ function CreditsPage() {
       <section className="credits-section">
         <h2>Sources and media</h2>
         <p>The team’s CCST9077 lecture slides are the primary source for the course explanations. The art gallery’s concept-art content has been reviewed by the team.</p>
-        <p>Three episode embeds are linked to the team’s supplied YouTube videos. The first three episode pages include transcripts based on the scripts used for those videos. Episode 4’s script is available, but its video link has not been supplied yet.</p>
+        <p>All four episode embeds link to the team’s supplied YouTube videos. Episodes 1–3 include readable transcripts based on their original scripts. Episode 4 requests captions from YouTube when available; a separate readable transcript is not currently included.</p>
       </section>
       <section className="credits-section">
         <h2>Story draft credit</h2>

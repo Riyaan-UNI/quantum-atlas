@@ -6,7 +6,7 @@
 
 - Opened the running Vite preview in Chrome and reviewed Home, Episodes, Episode 1, Atlas, Artwork, and About & Credits at the available desktop viewport.
 - Confirmed the home page presents three clear entry routes, with the story challenge visually secondary.
-- Confirmed the episode list communicates which three videos are playable and clearly identifies Episode 4 as awaiting a video link.
+- Confirmed all four episode links are playable, including Episode 4, “The Un-Copyable Secret.”
 - Confirmed Episode 1's video is the dominant element; its key question, transcript disclosure, science note, related topic, and next-episode route are available on the page.
 - Confirmed the Artwork page puts the slideshow first, followed by all 22 works grouped into 11 topics, visible NanoBanana Pro attribution, prompt disclosures, and Qubi's six expressions.
 - Confirmed the Atlas exposes all five regions and 11 topics, keeps every topic open, and provides a beginner start point.
@@ -28,7 +28,7 @@
 1. Verify phone, tablet, landscape phone, 320 CSS-pixel width, and 200–400% browser zoom.
 2. Complete keyboard-only traversal, reduced-motion behavior, and a contrast review with a dedicated accessibility checker.
 3. Verify caption-track availability on YouTube for each released episode. The episode pages provide readable transcripts; the player requests captions when available.
-4. Add Episode 4's video URL when supplied; until then the site correctly describes it as a script-backed forthcoming episode.
+4. Verify YouTube caption availability for Episode 4. Episodes 1–3 have local readable transcripts; Episode 4 does not currently have a separate transcript file.
 5. The team has reviewed and approved the project content and contributions. Keep the existing contribution record and credit to Riyaan for the plot draft/prompt contributions.
 
 The three supplied video scripts are the scripts used in the original videos. They are presented as readable transcripts, with short science notes alongside them to clarify analogies or qualify claims without rewriting the spoken scripts.
