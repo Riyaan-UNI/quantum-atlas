@@ -292,6 +292,7 @@ function Header({ active, progress, onNavigate }) {
   const links = [
     ["home", "Home"],
     ["episodes", "Episodes"],
+    ["story", "Story challenge"],
     ["atlas", "Atlas"],
     ["art", "Art"],
     ["credits", "Credits"],
@@ -321,7 +322,7 @@ function Header({ active, progress, onNavigate }) {
       <nav id="primary-navigation" className={`primary-nav${menuOpen ? " is-open" : ""}`} aria-label="Main navigation">
         {links.map(([view, label]) => (
           <motion.button
-            className={active === view ? "nav-link is-active" : "nav-link"}
+            className={`${active === view ? "nav-link is-active" : "nav-link"}${view === "story" ? " nav-link-story" : ""}`}
             type="button"
             key={view}
             onClick={() => choose(view)}
@@ -403,12 +404,23 @@ function HomePage({ progress, onNavigate, onEpisode, onTopic, onStory }) {
             </motion.button>
           </div>
           <p className="home-progress-note">{progress} of 11 topics marked explored · no scores, no locked paths</p>
-          <p className="story-entry-link"><span>Want a story challenge?</span> <button type="button" onClick={onStory}>{storyUI.entryTitle} <span aria-hidden="true">↗</span></button></p>
         </div>
         <div className="home-mascot-wrap">
           <motion.img className="home-mascot" src={assetUrl("assets/qubi-3d-clean-512.png")} alt="Qubi, your curious guide" animate={{ y: [0, -7, 0], rotate: [0, 1.2, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }} />
           <p className="home-qubi-caption">Qubi is ready to explore with you.</p>
         </div>
+      </motion.section>
+
+      <motion.section className="story-teaser" aria-labelledby="story-teaser-title" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.48 }}>
+        <div className="story-teaser-copy">
+          <p className="eyebrow">Optional interactive sci-fi story</p>
+          <h2 id="story-teaser-title">Want a story challenge?</h2>
+          <p className="story-teaser-name">{storyUI.entryTitle}</p>
+          <p>Two observatories share a strange pattern, but their records arrive at different times. Help Qubi decide what the evidence really says.</p>
+        </div>
+        <motion.button className="button button-primary story-teaser-cta" type="button" onClick={onStory} whileHover={{ y: -3 }} whileTap={{ scale: 0.97 }}>
+          Play the story challenge <span aria-hidden="true">↗</span>
+        </motion.button>
       </motion.section>
 
       <motion.section className="featured-episode" aria-labelledby="featured-heading" initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.18 }} transition={{ duration: 0.48 }}>
