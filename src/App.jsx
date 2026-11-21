@@ -1305,7 +1305,7 @@ function CreditsPage() {
               <AnimatePresence mode="wait">
                 <motion.article className="crew-reveal-card" key={teamMembers[activeCrew].name} initial={{ opacity: 0, y: 28, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, x: 100, y: -30, rotate: 3, scale: 0.98 }} transition={{ duration: 0.72, ease: [0.22, 0.8, 0.25, 1] }} aria-live="polite">
                   <p className="eyebrow">Crew member {String(activeCrew + 1).padStart(2, "0")} / 04</p>
-                  <div className="crew-reveal-evidence">{memberEvidence(teamMembers[activeCrew])}</div>
+                  <div className={`crew-reveal-evidence${teamMembers[activeCrew].name === "Damian" ? " crew-evidence-damian" : ""}`}>{memberEvidence(teamMembers[activeCrew])}</div>
                   <h2>{teamMembers[activeCrew].name}</h2>
                   <p>{teamMembers[activeCrew].fullName}</p>
                   <span className="crew-reveal-role">{[...teamMembers[activeCrew].roles, ...(teamMembers[activeCrew].newRoles ?? [])].join(" · ")}</span>
@@ -1346,7 +1346,7 @@ function CreditsPage() {
         <div className="crew-grid">
           {teamMembers.map((member, index) => (
             <motion.article className={`crew-card crew-card-${member.evidence}`} key={member.name} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.42, delay: index * 0.06 }}>
-              <div className="crew-evidence">
+              <div className={`crew-evidence${member.name === "Damian" ? " crew-evidence-damian" : ""}`}>
                 {member.portrait && <div className={`crew-card-portrait-wrap${member.name === "Damian" ? " is-damian" : ""}`}><img className="crew-card-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><button className="crew-portrait-zoom" type="button" onClick={() => setEnlargedPortrait(member)} aria-label={`Enlarge ${member.name}'s portrait`}><img className="crew-card-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, member of the Quantum Atlas team`} loading="lazy" /><span className="crew-portrait-zoom-hint" aria-hidden="true">View portrait ↗</span></button></div>}
                 {member.evidence === "website" && (
                   <div className="crew-site-preview">
