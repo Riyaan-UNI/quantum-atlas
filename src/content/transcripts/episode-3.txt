@@ -1,0 +1,43 @@
+TITLE — THE GAME SHOW THAT BROKE REALITY
+
+Qubi: Welcome back, fellow Quantum Indiana Joneses! In our last adventure, we discovered the mysterious connection between two entangled qubits. Today, we're going to see how this strange connection can help us win a seemingly impossible game!
+Alice: Hi, everyone! I'm Alice!
+Bob: And I'm Bob! We're today's contestants!
+Qubi: That's right! Welcome to the ultimate quantum game show! Now, let me explain the rules.
+Alice: I'm ready! What do we have to do?
+Qubi: You two will be sent into separate rooms, where you cannot communicate with each other. I'll give each of you one question. There are only two possibilities: you can only choose between Answer 1 and Answer 2.
+Bob: Sounds easy! So, how do we win?
+Qubi: Here's the catch! If both of you receive Question 1, you must give different answers to win. In all other cases, you must give the same answer!
+Alice: Wait, so if we both get Question 1, we disagree. But otherwise, we agree?
+Qubi: Exactly! And remember, you won't know what question the other person receives.
+Bob: Hmm... this is going to be tricky!
+Qubi: Let's start the game! Round 1! Both Alice and Bob receive Question 1!
+Alice: Answer 1!
+Bob: Answer 2!
+Qubi: Congratulations! You win!
+Bob: Nice! We're off to a good start!
+Qubi: Round 2! Alice receives Question 1, while Bob receives Question 2!
+Alice: Answer 1!
+Bob: Answer 2!
+
+[After a series of questions asked...]
+
+Qubi: Oh no! You lose! This time, your answers should have been the same!
+Alice: Hold on! How are we supposed to know what the other person will be asked?
+Bob: I have an idea! Before entering the rooms, let's agree to always give Answer 1!
+Alice: But then we'd lose whenever we both receive Question 1!
+Qubi: Exactly! In fact, even with the best possible classical strategy, you can never win more than 75% of the time, assuming all four combinations of questions are equally likely.
+Bob: So there's no way to do better than 75%?
+Qubi: Not with ordinary classical strategies! But what if I told you there's a way to beat this limit using quantum entanglement?
+Alice: You mean we can use our spooky twins?
+Qubi: That's right! Before entering your separate rooms, you share a pair of entangled qubits. Each of you takes one qubit with you. When you receive your question, you perform a measurement using the corresponding measurement device. The outcome of your measurement becomes your answer!
+Bob: So we still can't communicate, but our entangled qubits can help us win?
+Alice: That sounds like magic! But what's our chance of winning?
+Qubi: Here's the shocking part! Quantum mechanics predicts that you can win approximately 85% of the time!
+Alice: Wait, 85%? That's higher than the 75% limit!
+Bob: So we can actually beat the best classical strategy without even talking to each other?
+Qubi: Exactly! This game is called the CHSH game, and it demonstrates something truly remarkable: a violation of Bell's inequality.
+Alice: And this isn't just a mathematical trick, right? Have scientists actually tested it?
+Qubi: Absolutely! Scientists have performed experiments and observed these violations in laboratories. The results show that the world cannot be fully explained by theories that are both local and realistic.
+Bob: Wow! Who knew a simple game could reveal something so deep about the universe?
+Qubi: That's the power of quantum mechanics! And we've only just scratched the surface. In our next video, we will reveal another secret about quantum entanglement, which is the key behind quantum cryptography. See you then!

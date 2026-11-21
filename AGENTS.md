@@ -9,13 +9,13 @@ Before making substantial visual changes, use the Product Design plugin's `get-c
 - Build the selected first black-hole loading concept into a modern sci-fi game-based quantum learning website.
 - The public title is `Quantum Atlas`; tagline: `Chart the unknown. Keep asking why.`
 - Use the previous prototype's black-hole loading idea only as a motif; do not copy its page structure, old intro copy, old color system, or unrelated visuals.
-- Keep loading skippable, brief, reduced-motion safe, silent by default, and tied to actual loading. Never fabricate a percent or hold the visitor after content is ready.
+- Keep entry skippable, brief, reduced-motion safe, silent by default, and independent of heavy assets. Never fabricate a percent or hold the visitor after content is ready; the black-hole dive must always resolve promptly to Home.
 - Use `rem`/`em`, fluid layout sizing, and intrinsic `aspect-ratio` for responsive geometry. Avoid fixed-pixel page/card dimensions.
 - Keep the interface language plain, the science source-grounded in CCST9077 lectures, and the core `Predict → Reveal → Explain` interaction optional and non-punitive.
 - Do not use Figma or hand-drawn SVGs. Prefer real raster assets or an appropriate icon library; any future course artwork prompts should be credited accurately with the image-making tool used.
-- The Art page leads with a user-controlled slideshow, then shows every supplied lecture-linked concept-art variation grouped under its lecture topic, followed by Qubi's six reference-sheet emotions. Do not auto-advance; label “Dizzy” as playful character art, not a depiction of superposition.
+- The Art page leads with an automatically advancing slideshow that keeps manual controls, pauses on hover/focus, and stops autoplay for reduced-motion users. It then shows every supplied lecture-linked concept-art variation grouped under its lecture topic, followed by Qubi's six reference-sheet emotions. Label “Dizzy” as playful character art, not a depiction of superposition.
 - Show each concept artwork's source lecture, science caption and metaphor boundary, visible “AI-generated with Google NanoBanana Pro” credit, and expandable complete prompt (shared visual direction plus topic prompt). Provide a copy-prompt control. The project team supplied 22 images: two visual variations for each of 11 lecture topics.
-- The team still needs to review each generated image for scientific fit, accidental artifacts, and whether its mapping reads clearly to non-specialists; the interface must not imply the art is a scientific diagram.
+- The user has confirmed the generated art is validated. Keep the interface clear that concept art is illustrative, not a scientific diagram; do not add more art-to-lecture mapping work unless requested.
 - After a visitor marks a topic as explored, offer a direct button to the next topic in course order. The last topic returns to the Atlas; no content is locked.
 - Credit the four members using the names and contribution record supplied by the user and carried forward from the previous prototype. Label those roles as the prior record so the team can revise them if their responsibilities change.
 - Markus's contribution is video speaker only. Show contributions through the project artifacts they relate to, with concise role labels; do not present Markus as a scriptwriter.

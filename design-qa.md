@@ -1,28 +1,34 @@
-# Quantum Atlas design QA
+# Quantum Atlas visual and implementation review
 
-**Final result: blocked**
+**Status: desktop visual review complete; responsive and assistive-technology sign-off remains open.**
 
-## What was checked
+## Scope reviewed
 
-- Production build completed successfully with `npm run build`.
-- Page dimensions are fluid and use `rem`, `em`, `clamp()`, and media aspect ratios, with responsive rules for phone, tablet, and desktop widths.
-- A reduced-motion path and skip control are present for the black-hole opening animation.
-- The main site includes keyboard focus styles, a collapsible mobile navigation, saved-progress failure messaging, a progress reset, video embeds, topic content, artwork credits, and prompt disclosures.
-- Favicon files and page metadata are present.
-- The opening now appears on every full page load, waits for an explicit **Enter the Atlas** action, and has no session-storage suppression or artificial auto-dismiss timer.
-- Black-hole scene, ring, content, and Qubi have explicit visible stacking layers.
-- The home route cards and five Atlas regions now carry the approved sci-fi game presentation while explanatory topic text remains readable on the warm light surface.
-- Inspected the local Chrome preview at a compact browser window size. The opening screen now fits the visible area; the entry control and Qubi remain in view. The progress settings and page background were adjusted after reviewing the supplied screenshots.
+- Opened the running Vite preview in Chrome and reviewed Home, Episodes, Episode 1, Atlas, Artwork, and About & Credits at the available desktop viewport.
+- Confirmed the home page presents three clear entry routes, with the story challenge visually secondary.
+- Confirmed the episode list communicates which three videos are playable and clearly identifies Episode 4 as awaiting a video link.
+- Confirmed Episode 1's video is the dominant element; its key question, transcript disclosure, science note, related topic, and next-episode route are available on the page.
+- Confirmed the Artwork page puts the slideshow first, followed by all 22 works grouped into 11 topics, visible NanoBanana Pro attribution, prompt disclosures, and Qubi's six expressions.
+- Confirmed the Atlas exposes all five regions and 11 topics, keeps every topic open, and provides a beginner start point.
+- Confirmed Credits exposes all four team members, contribution evidence, AI use, technologies, story attribution, and media status after the reveal.
+- Removed the overlapping Animate.css motion from the credit-card evidence window after spotting the artwork briefly moving over the member name. The slower, readable card timing remains.
+- The native browser cursor is used; no custom cursor script or pointer artwork is installed. The pointer halo visible in the local capture is the browser automation's cursor indicator.
+- The previous peach-colored trailing strip is not present in the currently reviewed routes.
+- The AI-use statement and artwork attribution are visible without opening a prompt disclosure. No rating UI, API, database migration, or D1 rating binding remains.
 
-## Why visual review is blocked
+## Automated checks completed
 
-Only the compact local preview was visually inspected in this pass. Desktop, tablet, small-phone, landscape-phone, 200–400% zoom, keyboard traversal, and the lower-page contrast fixes still need a full human review. The responsive design is therefore not marked visually passed.
+- `npm run build` — passed; client bundle and Sites package were generated.
+- `npm run test:sites` — passed, 4 checks.
+- `node --test src/sim/bell.test.js src/story/state.test.js` — passed, 11 checks.
+- `git diff --check` — passed (Git reported only Windows line-ending normalization notices).
 
-## Review before presentation
+## Outstanding before submission
 
-1. Open the project locally and inspect Home, Episodes, each episode, Atlas, topic detail, Artwork, Glossary, and About & Credits at phone, tablet, and desktop widths.
-2. Check keyboard-only navigation, visible focus, reduced motion, 200–400% zoom, captions/transcript access, and contrast.
-3. Add and review the Episode 4 video when available. Captions and transcript access must be confirmed for all released episodes.
-4. Replace the prototype lecture-art placeholders with the team's reviewed artwork, verify lecture references against the slides, and fill in the real names and contributions of all four members.
-5. Confirm that the final AI-use statement covers every tool used in submitted media and text.
+1. Verify phone, tablet, landscape phone, 320 CSS-pixel width, and 200–400% browser zoom.
+2. Complete keyboard-only traversal, reduced-motion behavior, and a contrast review with a dedicated accessibility checker.
+3. Verify caption-track availability on YouTube for each released episode. The episode pages provide readable transcripts; the player requests captions when available.
+4. Add Episode 4's video URL when supplied; until then the site correctly describes it as a script-backed forthcoming episode.
+5. The team has reviewed and approved the project content and contributions. Keep the existing contribution record and credit to Riyaan for the plot draft/prompt contributions.
 
+The three supplied video scripts are the scripts used in the original videos. They are presented as readable transcripts, with short science notes alongside them to clarify analogies or qualify claims without rewriting the spoken scripts.

@@ -1,0 +1,26 @@
+PART I — WELCOMING AND INTRODUCTION
+
+Speaker: Welcome to the lecture on the quantum magic box!
+Qubi: Hi!
+Speaker: Since this is likely your very first stop on our course list, I want to take a moment to welcome you and show you around. Our course features a mix of interactive lectures, mini-games, and many other resources designed to enhance your journey through the quantum realm. Whether your background is in engineering, science, business, or even the arts, this space is built for you.
+Speaker: Before we dive in, let me introduce the little robot standing next to me. This is our mascot, Qubi!
+Qubi: Hi, fellow Quantum Indiana Joneses!
+Speaker: And I am Markus, your speaker today. We are truly thrilled to have you here and wish you an incredible learning journey ahead!
+
+PART II — THE MAGIC BOX
+
+Speaker: Before we can understand quantum magic, we need to look at how regular technology works. Every smartphone, computer, and app you use today runs on something called a bit.
+Speaker: Think of a standard bit like a regular, everyday light switch. It can only be in one of two positions: 0 (off) or 1 (on).
+Speaker: It is certain, it is predictable, and it can only be one thing at a time. Millions of these tiny 0s and 1s flip back and forth to run your computer.
+Speaker: But what happens when we look inside our Quantum Magic Box? The rules of the regular world completely change.
+Speaker: Inside this box, we don't use regular bits. We use quantum bits, or qubits—which is exactly who our mascot was named after!
+Qubi: That's right! I'm not just a regular robot. I operate on quantum magic!
+Speaker: So, what makes a qubit so magical?
+Speaker: Instead of a stiff light switch that is either 0 or 1, imagine a qubit as a spinning coin.
+Speaker: While the coin is flat on the table, it’s clearly either heads (1) or tails (0). That’s your standard bit. But when you spin that coin on the table, what is it? Is it heads or tails?
+Qubi: It’s both at the same time!
+Speaker: Exactly. While it is spinning, it exists in a blend of both states. In physics, we call this superposition. A qubit can be 0, 1, or any possibility in between, all at once.
+Speaker: This ability to explore multiple possibilities at the exact same time is the secret power of quantum computing. It allows us to solve massive, complex problems faster than any regular computer ever could.
+Speaker: Throughout this course, Qubi and I will show you how to control these spinning coins and unlock the true power of the quantum realm. Ready to begin?
+Qubi: Let’s do it!
+Speaker: In our next video, we will level up and explore quantum entanglement—discovering what happens when two qubits become deeply connected as “Spooky Twins.” See you there!

@@ -1,0 +1,20 @@
+Speaker: Welcome back, fellow explorers! I am your speaker Markus. In our first lecture, we cracked open the quantum magic box and met our mascot, Qubi.
+Speaker: Remember our spinning coin? We learned that a single qubit doesn't have to choose between being a 0 or a 1. Instead, it can exist as both at the same time—a state called superposition.
+Speaker: But today, things are getting even weirder. What happens when we have two spinning coins inside our magic box, and they start talking to each other?
+Qubi: Cue the spooky music!
+Speaker: Exactly, Qubi. Today we are talking about quantum entanglement, or what Albert Einstein famously called “spooky action at a distance.” To understand it, let’s look at a pair of Spooky Twins—two entangled photons.
+Speaker: Imagine we have two identical magic boxes. We place one entangled photon in Box A, and the other in Box B.
+Speaker: Right now, both photons are spinning like coins. Neither has decided to be a 0 or a 1 yet. Next, we take Box B and ship it all the way across the universe—millions of light-years away.
+Speaker: In the classical, everyday world, what happens to an object in Box A has absolutely no effect on an object millions of miles away. But the quantum realm breaks that intuition with one strict rule.
+Speaker: The moment we open Box A and look at our photon, its coin stops spinning and lands on 0. Instantly, without a millisecond of delay, the photon in Box B across the universe stops spinning too—and it lands on 1.
+Qubi: It’s a perfect match, every single time! If one is 0, the other is always 1.
+Speaker: It is as if they are telepathic twins. No matter how far apart they are, looking at one forces the other to choose its state instantly.
+Speaker: Now, you might be thinking: “Wow! Instant communication across the universe? We can use this to send messages faster than the speed of light!”
+Speaker: Unfortunately, nature has a strict cosmic speed limit. You cannot use entangled twins to send a text message or any actual data. Why? Because of randomness.
+Speaker: When you open Box A, you have absolutely no control over whether the coin lands on 0 or 1. It is completely random, like a cosmic dice roll.
+Qubi: And if you can't control what your coin says, you can't use it to type out a message!
+Speaker: Exactly. The person opening Box B will see their coin stop spinning, but to them, it just looks like a random 0 or 1. They have no way of knowing you looked at your box until you tell them the old-fashioned way—by calling them or sending a regular text message, which is strictly limited by the speed of light.
+Speaker: Entanglement gives us a magical, unbreakable connection, but it doesn't give us a cosmic telephone.
+Qubi: Bummer! No faster-than-light texting.
+Speaker: True, but don't lose hope just yet. While entanglement can't send messages, it can help us beat the odds in impossible scenarios.
+Speaker: In our next video, we are stepping onto the stage of “The Game Show That Broke Reality.” We will watch two contestants, Alice and Bob, use quantum entanglement to completely shatter a math rule that no normal, classical team could ever beat. See you in the next episode!
