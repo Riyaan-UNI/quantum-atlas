@@ -1315,6 +1315,12 @@ body:has(.loading-intro) {
 .crew-reveal-script blockquote { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: clamp(1.2rem, 4vw, 2rem); font-weight: 700; line-height: 1.1; }
 .crew-reveal-script small { color: #586569; }
 .crew-reveal-role { color: #dce7e3; font-size: 0.9rem; line-height: 1.4; }
+.crew-reveal-controls { position: absolute; inset-block-end: max(1.25rem, env(safe-area-inset-bottom)); inset-inline-start: max(1rem, env(safe-area-inset-left)); display: flex; align-items: center; gap: 0.8rem; }
+.crew-countdown { margin: 0; color: var(--white); font-size: 0.9rem; }
+.crew-countdown strong { color: var(--green); font-variant-numeric: tabular-nums; }
+.crew-reveal-next { min-block-size: 2.75rem; padding-inline: 1rem; border: 0.0625rem solid var(--green); border-radius: 999rem; background: rgba(69, 232, 93, 0.12); color: var(--white); font: inherit; font-weight: 700; cursor: pointer; }
+.crew-reveal-next:hover { background: var(--green); color: var(--deep-space); }
+.crew-reveal-next:focus-visible { outline: 0.2rem solid var(--white); outline-offset: 0.2rem; }
 .crew-reveal-skip { position: absolute; inset-block-end: max(1.25rem, env(safe-area-inset-bottom)); inset-inline-end: max(1rem, env(safe-area-inset-right)); min-block-size: 2.75rem; padding-inline: 0.9rem; border: 0.0625rem solid rgba(245, 242, 234, 0.4); border-radius: 999rem; background: rgba(4, 10, 16, 0.75); color: var(--white); cursor: pointer; }
 .crew-final-title { z-index: 2; max-inline-size: 16ch; margin: 0; color: var(--white); font-family: "Space Grotesk", sans-serif; font-size: clamp(2.4rem, 8vw, 6.5rem); line-height: 0.98; text-align: center; text-wrap: balance; text-shadow: 0 0 2rem rgba(69, 232, 93, 0.25); }
 .cast-confetti { position: fixed; z-index: 1; inset: 0; inline-size: 100%; block-size: 100%; pointer-events: none; }
@@ -1329,6 +1335,8 @@ body:has(.loading-intro) {
 @media (max-width: 42rem) {
   .crew-finale { align-items: start; flex-direction: column; }
   .crew-reveal-evidence { aspect-ratio: 16 / 9; }
+  .crew-reveal-controls { inset-inline-end: max(1rem, env(safe-area-inset-right)); inset-block-end: calc(env(safe-area-inset-bottom) + 4rem); flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+  .crew-reveal-skip { inset-block-end: max(1rem, env(safe-area-inset-bottom)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

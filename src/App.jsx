@@ -1092,6 +1092,7 @@ function CreditsPage() {
   const [activeCrew, setActiveCrew] = useState(-1);
   const [finale, setFinale] = useState(false);
   const [revealDone, setRevealDone] = useState(Boolean(reduced));
+  const [secondsLeft, setSecondsLeft] = useState(5);
   const [run, setRun] = useState(0);
   const teamMembers = [
     {
@@ -1130,24 +1131,46 @@ function CreditsPage() {
       return undefined;
     }
     setRevealDone(false);
-    setActiveCrew(-1);
+    setActiveCrew(0);
     setFinale(false);
-    const timers = [
-      window.setTimeout(() => setActiveCrew(0), 260),
-      window.setTimeout(() => setActiveCrew(1), 4800),
-      window.setTimeout(() => setActiveCrew(2), 9340),
-      window.setTimeout(() => setActiveCrew(3), 13880),
-      window.setTimeout(() => setFinale(true), 18420),
-      window.setTimeout(() => setRevealDone(true), 22620),
-    ];
-    return () => timers.forEach(window.clearTimeout);
+    setSecondsLeft(5);
   }, [run, reduced]);
+
+  useEffect(() => {
+    if (reduced || revealDone || finale || activeCrew < 0) return undefined;
+    const duration = 5000;
+    const startedAt = Date.now();
+    setSecondsLeft(5);
+    const countdown = window.setInterval(() => {
+      const remaining = Math.ceil((duration - (Date.now() - startedAt)) / 1000);
+      setSecondsLeft(Math.max(1, remaining));
+    }, 200);
+    const advance = window.setTimeout(() => {
+      if (activeCrew < teamMembers.length - 1) setActiveCrew(activeCrew + 1);
+      else setFinale(true);
+    }, duration);
+    return () => {
+      window.clearInterval(countdown);
+      window.clearTimeout(advance);
+    };
+  }, [activeCrew, finale, reduced, revealDone, run]);
+
+  useEffect(() => {
+    if (!finale || reduced) return undefined;
+    const timer = window.setTimeout(() => setRevealDone(true), 5000);
+    return () => window.clearTimeout(timer);
+  }, [finale, reduced, run]);
 
   const memberEvidence = (member) => {
     if (member.evidence === "website") return <img className="crew-reveal-art" src={assetUrl("assets/black-hole-scene.png")} alt="The black-hole artwork used for the website experience." />;
     if (member.evidence === "mascot") return <img className="crew-reveal-art crew-reveal-mascot" src={assetUrl("assets/qubi-reference-sheet.png")} alt="The Qubi model and expression sheet." />;
     if (member.evidence === "speaker") return <div className="crew-reveal-video-strip">{releasedVideos.map((video) => <img key={video.id} src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} alt={`Video still from ${video.title}`} />)}</div>;
     return <div className="crew-reveal-script"><span>EPISODE SCRIPT · QUBI</span><blockquote>“Ooh, I love secrets!”</blockquote><small>Dialogue · science story · spoken performance</small></div>;
+  };
+  const advanceCrew = () => {
+    if (activeCrew < 0) return;
+    if (activeCrew < teamMembers.length - 1) setActiveCrew((current) => current + 1);
+    else setFinale(true);
   };
   const skipReveal = () => { setRevealDone(true); setFinale(false); setActiveCrew(-1); };
 
@@ -1170,6 +1193,12 @@ function CreditsPage() {
             )}
             {finale && <motion.h2 className="crew-final-title" initial={{ opacity: 0, scale: 0.58, y: 30 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ type: "spring", stiffness: 180, damping: 15 }}>Well, that was our cast.</motion.h2>}
             {finale && <ConfettiBurst active />}
+            {!finale && activeCrew >= 0 && <div className="crew-reveal-controls">
+              <p className="crew-countdown">Next reveal in <strong>{secondsLeft}</strong> {secondsLeft === 1 ? "second" : "seconds"}</p>
+              <button className="crew-reveal-next" type="button" onClick={advanceCrew}>
+                {activeCrew === teamMembers.length - 1 ? "Finish reveal" : "Next crew member"} <span aria-hidden="true">→</span>
+              </button>
+            </div>}
             <button className="crew-reveal-skip" type="button" onClick={skipReveal}>Skip introduction</button>
           </motion.div>
         )}
