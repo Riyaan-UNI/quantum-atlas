@@ -1193,6 +1193,7 @@ const projectMilestones = [
 function CreditsPage() {
   const reduced = useReducedMotion();
   const timelineRef = useRef(null);
+  const portraitDialogRef = useRef(null);
   const { scrollYProgress: timelineScrollProgress } = useScroll({
     target: timelineRef,
     offset: ["start 0.85", "end 0.25"],
@@ -1202,6 +1203,7 @@ function CreditsPage() {
   const [revealDone, setRevealDone] = useState(Boolean(reduced));
   const [secondsLeft, setSecondsLeft] = useState(5);
   const [run, setRun] = useState(0);
+  const [enlargedPortrait, setEnlargedPortrait] = useState(null);
   const teamMembers = [
     {
       name: "Riyaan",
@@ -1272,8 +1274,15 @@ function CreditsPage() {
     return () => window.clearTimeout(timer);
   }, [finale, reduced, run]);
 
+  useEffect(() => {
+    if (!enlargedPortrait) return undefined;
+    const dialog = portraitDialogRef.current;
+    if (dialog && !dialog.open) dialog.showModal();
+    return () => { if (dialog?.open) dialog.close(); };
+  }, [enlargedPortrait]);
+
   const memberEvidence = (member) => {
-    if (member.portrait) return <div className="crew-reveal-portrait-wrap"><img className="crew-reveal-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><img className="crew-reveal-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, a member of the Quantum Atlas team`} /></div>;
+    if (member.portrait) return <div className={`crew-reveal-portrait-wrap${member.name === "Damian" ? " is-damian" : ""}`}><img className="crew-reveal-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><button className="crew-portrait-zoom" type="button" onClick={() => setEnlargedPortrait(member)} aria-label={`Enlarge ${member.name}'s portrait`}><img className="crew-reveal-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, a member of the Quantum Atlas team`} /></button></div>;
     if (member.evidence === "website") return <img className="crew-reveal-art" src={assetUrl("assets/black-hole-scene.png")} alt="The black-hole artwork used for the website experience." />;
     if (member.evidence === "mascot") return <img className="crew-reveal-art crew-reveal-mascot" src={assetUrl("assets/qubi-reference-sheet.png")} alt="The Qubi model and expression sheet." />;
     if (member.evidence === "speaker") return <div className="crew-reveal-video-strip">{releasedVideos.map((video) => <img key={video.id} src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} alt={`Video still from ${video.title}`} />)}</div>;
@@ -1338,7 +1347,7 @@ function CreditsPage() {
           {teamMembers.map((member, index) => (
             <motion.article className={`crew-card crew-card-${member.evidence}`} key={member.name} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.42, delay: index * 0.06 }}>
               <div className="crew-evidence">
-                {member.portrait && <div className="crew-card-portrait-wrap"><img className="crew-card-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><img className="crew-card-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, member of the Quantum Atlas team`} loading="lazy" /></div>}
+                {member.portrait && <div className={`crew-card-portrait-wrap${member.name === "Damian" ? " is-damian" : ""}`}><img className="crew-card-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><button className="crew-portrait-zoom" type="button" onClick={() => setEnlargedPortrait(member)} aria-label={`Enlarge ${member.name}'s portrait`}><img className="crew-card-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, member of the Quantum Atlas team`} loading="lazy" /><span className="crew-portrait-zoom-hint" aria-hidden="true">View portrait ↗</span></button></div>}
                 {member.evidence === "website" && (
                   <div className="crew-site-preview">
                     <img src={assetUrl("assets/black-hole-scene.png")} alt="The dark cinematic black-hole scene used in the Quantum Atlas experience." />
@@ -1457,6 +1466,13 @@ function CreditsPage() {
         <h2>Accessibility</h2>
         <p>The site supports keyboard focus, reduced-motion preferences, and readable transcripts for Episodes 1–3. The player requests caption tracks when available; track availability and the full screen-size and zoom review are not verified here.</p>
       </section>
+      {enlargedPortrait && <dialog ref={portraitDialogRef} className="crew-photo-viewer" aria-labelledby="crew-photo-title" onClose={() => setEnlargedPortrait(null)} onClick={(event) => { if (event.target === event.currentTarget) event.currentTarget.close(); }}>
+        <div className="crew-photo-viewer-content">
+          <button className="crew-photo-viewer-close" type="button" onClick={() => portraitDialogRef.current?.close()} aria-label="Close enlarged portrait">Close <span aria-hidden="true">×</span></button>
+          <img src={assetUrl(enlargedPortrait.portrait)} alt={`Portrait of ${enlargedPortrait.name}, ${enlargedPortrait.fullName}`} />
+          <p id="crew-photo-title">{enlargedPortrait.name} <span>· {enlargedPortrait.fullName}</span></p>
+        </div>
+      </dialog>}
     </main>
   );
 }
