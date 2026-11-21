@@ -1120,7 +1120,7 @@ body:has(.loading-intro) {
 .crew-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(0.85rem, 2vw, 1.25rem); }
 .crew-card { min-inline-size: 0; overflow: hidden; border: 0.0625rem solid rgba(245, 242, 234, 0.17); border-radius: var(--radius-medium); background: rgba(245, 242, 234, 0.055); }
 .crew-evidence { position: relative; overflow: hidden; aspect-ratio: 16 / 8.8; background: #040a10; }
-.crew-card-portrait-wrap { position: relative; display: grid; inline-size: 100%; block-size: 100%; place-items: center; overflow: hidden; background: radial-gradient(ellipse at center, #18353a, #07131a 75%); }
+.crew-card-portrait-wrap { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; background: radial-gradient(ellipse at center, #18353a, #07131a 75%); }
 .crew-card-portrait-backdrop { position: absolute; inset: -1rem; inline-size: calc(100% + 2rem); block-size: calc(100% + 2rem); object-fit: cover; filter: blur(1.1rem) brightness(0.4) saturate(0.85); transform: scale(1.04); }
 .crew-card-portrait { position: relative; z-index: 1; display: block; inline-size: 100%; block-size: 100%; object-fit: cover; object-position: center 35%; }
 .crew-portrait-zoom { position: relative; z-index: 1; display: grid; inline-size: 100%; block-size: 100%; place-items: center; overflow: hidden; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
@@ -1355,9 +1355,9 @@ body:has(.loading-intro) {
 .crew-reveal-card .eyebrow { color: var(--green); }
 .crew-reveal-card h2 { margin: 0; font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1; }
 .crew-reveal-card > p:not(.eyebrow) { margin: 0; color: var(--mist); }
-.crew-reveal-evidence { display: grid; min-block-size: 0; aspect-ratio: 16 / 7; place-items: center; overflow: hidden; border: 0.0625rem solid rgba(245, 242, 234, 0.15); border-radius: var(--radius-medium); background: #040a10; }
+.crew-reveal-evidence { position: relative; display: grid; min-block-size: 0; aspect-ratio: 16 / 7; place-items: center; overflow: hidden; border: 0.0625rem solid rgba(245, 242, 234, 0.15); border-radius: var(--radius-medium); background: #040a10; }
 .crew-reveal-art { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
-.crew-reveal-portrait-wrap { position: relative; display: grid; inline-size: 100%; block-size: 100%; place-items: center; overflow: hidden; background: radial-gradient(ellipse at center, #18353a, #07131a 75%); }
+.crew-reveal-portrait-wrap { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; background: radial-gradient(ellipse at center, #18353a, #07131a 75%); }
 .crew-reveal-portrait-backdrop { position: absolute; inset: -1rem; inline-size: calc(100% + 2rem); block-size: calc(100% + 2rem); object-fit: cover; object-position: 50% 25%; filter: blur(1.1rem) brightness(0.38) saturate(0.8); transform: scale(1.04); }
 .crew-reveal-portrait { position: relative; z-index: 1; display: block; inline-size: 100%; block-size: 100%; object-fit: cover; object-position: 50% 25%; }
 .crew-reveal-mascot { object-fit: contain; background: var(--ivory); }
