@@ -1087,6 +1087,96 @@ function ConfettiBurst({ active }) {
   return <canvas ref={canvasRef} className="cast-confetti" aria-hidden="true" />;
 }
 
+const projectMilestones = [
+  {
+    date: "23 September 2026",
+    title: "The first spark",
+    detail: "Damian proposed a website with short videos explaining quantum ideas. The project began with Damian and Riyaan; Markus joined the team later.",
+    people: ["Damian", "Riyaan"],
+  },
+  {
+    date: "5 October 2026",
+    title: "A multimedia project",
+    detail: "The instructor confirmed that the project could take a multimedia direction, opening the way for a website, videos, and visual material to work together.",
+    people: ["Team"],
+  },
+  {
+    date: "7 October 2026",
+    title: "Qubi gets a face and a name",
+    detail: "Damian proposed a mascot and the team made its first design video. Riyaan came up with the name Qubi.",
+    people: ["Damian", "Riyaan"],
+  },
+  {
+    date: "9–15 October 2026",
+    title: "Scripts, locations, and first roles",
+    detail: "The team planned filming locations and divided the work. Markus became the on-camera speaker; Riyaan took on the website and camera; Damian led editing and wrote Scripts 1 and 2. The scripts and locations were revised before filming.",
+    people: ["Damian", "Markus", "Riyaan"],
+  },
+  {
+    date: "11–12 October 2026",
+    title: "The first prototype and scripts",
+    detail: "Riyaan published the first website prototype on GitHub. Damian joined the repository as a collaborator, and Scripts 1 and 2 were ready.",
+    people: ["Damian", "Riyaan"],
+    links: [{ label: "View the first prototype", href: "https://github.com/Riyaan-UNI/CCST9077-26-27-SemOne/tree/main" }],
+  },
+  {
+    date: "16–19 October 2026",
+    title: "First filming, first edit, and a reshoot decision",
+    detail: "The team recorded the first two scripts. Riyaan ran the camera through multiple takes and introduced a teleprompter to help the speaker. Damian edited the early footage; camera shake led the team to agree on a reshoot.",
+    people: ["Damian", "Markus", "Riyaan"],
+  },
+  {
+    date: "20–30 October 2026",
+    title: "The team becomes four",
+    detail: "After group registration opened, Cynthia joined following tutorial discussions with the team. All four registered as Group 1. Cynthia helped refine the scripts and wrote Scripts 3 and 4.",
+    people: ["Cynthia", "Damian", "Markus", "Riyaan"],
+  },
+  {
+    date: "31 October 2026",
+    title: "A second day on camera",
+    detail: "The team filmed Script 1 with Markus, then Script 3 with Cynthia as Alice and Markus as Bob.",
+    people: ["Cynthia", "Damian", "Markus", "Riyaan"],
+  },
+  {
+    date: "2–4 November 2026",
+    title: "Reshooting, editing, and publishing three videos",
+    detail: "Damian updated the earlier ‘Four People, One Robot’ build and shared the reshot Episode 1 edit. Riyaan helped Damian edit and assemble Episode 3, added music to Episodes 2 and 3, and Damian added subtitles and Qubi. The three videos went to YouTube on 4 November.",
+    people: ["Damian", "Riyaan"],
+  },
+  {
+    date: "5–13 November 2026",
+    title: "Trying many versions of the website",
+    detail: "Riyaan explored several visual directions, revising the site until the experience felt right. The branch history records those experiments.",
+    people: ["Riyaan"],
+    links: [
+      { label: "UI refresh", href: "https://github.com/Riyaan-UNI/CCST9077-26-27-SemOne/tree/ui-refresh" },
+      { label: "Quantum sci-fi UI", href: "https://github.com/Riyaan-UNI/CCST9077-26-27-SemOne/tree/feature/quantum-scifi-ui-overhaul" },
+      { label: "Quantum observatory", href: "https://github.com/Riyaan-UNI/CCST9077-26-27-SemOne/tree/feature/quantum-observatory-reskin" },
+      { label: "Quantum lost and found", href: "https://github.com/Riyaan-UNI/CCST9077-26-27-SemOne/tree/concept/quantum-lost-found" },
+    ],
+  },
+  {
+    date: "13–14 November 2026",
+    title: "Recording the fourth episode",
+    detail: "The team settled the location and plan. Riyaan filmed Cynthia as host, while Damian voiced Qubi and ran the teleprompter. The raw recording was uploaded that day.",
+    people: ["Cynthia", "Damian", "Riyaan"],
+  },
+  {
+    date: "14–21 November 2026",
+    title: "One more major design search",
+    detail: "Riyaan continued refining the earlier site and settled on the ‘Quantum Bureau Field Journal’ direction. Wanting a more game-like experience, Riyaan started a fresh repository for Quantum Atlas on 20 November.",
+    people: ["Riyaan"],
+    links: [{ label: "Quantum Bureau Field Journal", href: "https://github.com/Riyaan-UNI/CCST9077-26-27-SemOne/tree/concept/quantum-bureau-field-journal" }],
+  },
+  {
+    date: "20–21 November 2026",
+    title: "Building Quantum Atlas together",
+    detail: "Riyaan shaped the game-like site step by step, using the lecture materials and notes as science references, and generated and curated 22 concept-art images with Google NanoBanana Pro. Riyaan drafted the story prompt and worked with AI on refinements and scene ideas; the team’s creative choices and science review remain human responsibilities.",
+    people: ["Team", "Riyaan"],
+    links: [{ label: "Open the Quantum Atlas repository", href: "https://github.com/Riyaan-UNI/quantum-atlas" }],
+  },
+];
+
 function CreditsPage() {
   const reduced = useReducedMotion();
   const [activeCrew, setActiveCrew] = useState(-1);
@@ -1099,25 +1189,25 @@ function CreditsPage() {
       name: "Riyaan",
       fullName: "Patan Mohammed Riyaan",
       roles: ["Website development", "Video editing", "Qubi mascot work"],
-      newRoles: ["Concept-art prompts and gallery curation", "Plot v2 script and prompt contributions"],
+      newRoles: ["Quantum Atlas creative direction and iterative design", "Camera, teleprompter, and music work", "Concept-art prompts and gallery curation", "Plot prompt and story development"],
       evidence: "website",
     },
     {
       name: "Damian",
       fullName: "Lau Long Yat Damian",
-      roles: ["Qubi's voice", "Lead video editor", "Video scriptwriting", "Qubi mascot inventor"],
+      roles: ["Original project idea", "Scripts 1 and 2", "Qubi's voice and mascot design", "Video editing"],
       evidence: "mascot",
     },
     {
       name: "Markus",
       fullName: "Doelvik Markus Skjerstad",
-      roles: ["Video speaker"],
+      roles: ["On-camera speaker", "Bob in the CHSH game video"],
       evidence: "speaker",
     },
     {
       name: "Cynthia",
       fullName: "Sun Siyan",
-      roles: ["Video scriptwriting", "Video speaker"],
+      roles: ["Scripts 3 and 4", "Alice in the CHSH game video", "Episode 4 host"],
       evidence: "scripts",
     },
   ];
@@ -1279,9 +1369,40 @@ function CreditsPage() {
         </div>
         <p className="crew-record-note">Previous-build roles are carried forward as provided. Current-build additions are marked separately where the contribution is documented.</p>
       </section>
+      <section className="project-timeline" aria-labelledby="project-timeline-title">
+        <header className="project-timeline-heading">
+          <div>
+            <p className="eyebrow">The work behind the finished experience</p>
+            <h2 id="project-timeline-title">From first spark to Quantum Atlas</h2>
+            <p>A record of the ideas, filming days, revisions, and people that shaped the project.</p>
+          </div>
+          <div className="timeline-facts" aria-label="Project duration and tracked hours">
+            <p><strong>23 Sep–21 Nov 2026</strong><span>About eight and a half weeks</span></p>
+            <p><strong>Hours not tracked</strong><span>We won’t invent a total from calendar dates.</span></p>
+          </div>
+        </header>
+        <ol className="project-timeline-list">
+          {projectMilestones.map((milestone, index) => (
+            <motion.li className="timeline-milestone" key={`${milestone.date}-${milestone.title}`} initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.35, delay: Math.min(index % 4, 3) * 0.05 }}>
+              <div className="timeline-marker" aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span></div>
+              <article className="timeline-entry">
+                <p className="timeline-date">{milestone.date}</p>
+                <h3>{milestone.title}</h3>
+                <p>{milestone.detail}</p>
+                <p className="timeline-people"><span>Involved</span> {milestone.people.join(" · ")}</p>
+                {milestone.links?.length > 0 && <details className="timeline-evidence">
+                  <summary>Explore project evidence <span aria-hidden="true">↗</span></summary>
+                  <ul>{milestone.links.map((link) => <li key={link.href}><a href={link.href} target="_blank" rel="noreferrer">{link.label}</a></li>)}</ul>
+                </details>}
+              </article>
+            </motion.li>
+          ))}
+        </ol>
+        <p className="timeline-closing">The current site is the latest chapter in a project shaped by repeated experiments, shared production work, and a lot of care.</p>
+      </section>
       <section className="credits-section" id="ai-use">
         <h2>AI use</h2>
-        <p>ChatGPT supported research, design and story brainstorming, website coding and debugging, and language edits; Google NanoBanana Pro generated the concept-art images. The team chose the creative direction and is responsible for reviewing and editing the submitted work.</p>
+        <p>ChatGPT assisted with research and planning, design exploration, website coding and debugging, language edits, and refining Riyaan’s story prompt and scene ideas. Google NanoBanana Pro generated the concept-art images. The team set the creative direction, wrote and revised its project scripts, selected the final outputs, and takes responsibility for fact-checking the science.</p>
       </section>
       <section className="credits-section" aria-labelledby="technology-credits-title">
         <h2 id="technology-credits-title">Libraries and technologies</h2>
