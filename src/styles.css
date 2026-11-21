@@ -1135,9 +1135,12 @@ body:has(.loading-intro) {
 .crew-script-page blockquote { max-inline-size: 30ch; margin: 0; font-family: "Space Grotesk", sans-serif; font-size: clamp(1rem, 2vw, 1.4rem); font-weight: 600; line-height: 1.2; }
 .crew-script-page > span { color: #586569; font-size: 0.76rem; }
 .crew-card-copy { padding: clamp(1rem, 2vw, 1.4rem); }
+.crew-identity { display: flex; align-items: center; gap: 0.9rem; min-inline-size: 0; margin-block-end: 0.8rem; }
+.crew-identity > div { min-inline-size: 0; }
+.crew-identity h3 { margin: 0; color: var(--white); font-size: clamp(1.35rem, 2vw, 1.75rem); }
+.crew-portrait { display: block; inline-size: clamp(4.5rem, 8vw, 6.5rem); flex: 0 0 auto; aspect-ratio: 1; border: 0.12rem solid rgba(69, 232, 93, 0.72); border-radius: 1rem; object-fit: cover; object-position: center 35%; background: #10242a; box-shadow: 0 0.4rem 1.3rem rgba(0, 0, 0, 0.28); }
 .crew-index { margin: 0 0 0.25rem; color: var(--green); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; }
-.crew-card-copy h3 { margin: 0; color: var(--white); font-size: clamp(1.35rem, 2vw, 1.75rem); }
-.crew-full-name { margin: 0.1rem 0 0.85rem; color: var(--mist); font-size: 0.9rem; }
+.crew-full-name { margin: 0.2rem 0 0; color: var(--mist); font-size: 0.9rem; }
 .crew-role-group { display: grid; gap: 0.35rem; margin-block-start: 0.8rem; }
 .crew-role-label { margin: 0; color: #aabeb9; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 .crew-role-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }

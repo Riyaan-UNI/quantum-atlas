@@ -1213,18 +1213,21 @@ function CreditsPage() {
     {
       name: "Damian",
       fullName: "Lau Long Yat Damian",
+      portrait: "assets/crew/damian.png",
       roles: ["Original project idea", "Scripts 1 and 2", "Qubi's voice and mascot design", "Video editing"],
       evidence: "mascot",
     },
     {
       name: "Markus",
       fullName: "Doelvik Markus Skjerstad",
+      portrait: "assets/crew/markus.png",
       roles: ["On-camera speaker", "Bob in the CHSH game video"],
       evidence: "speaker",
     },
     {
       name: "Cynthia",
       fullName: "Sun Siyan",
+      portrait: "assets/crew/cynthia.png",
       roles: ["Scripts 3 and 4", "Alice in the CHSH game video", "Episode 4 host"],
       evidence: "scripts",
     },
@@ -1367,8 +1370,10 @@ function CreditsPage() {
               </div>
               <div className="crew-card-copy">
                 <p className="crew-index">CREW MEMBER {String(index + 1).padStart(2, "0")}</p>
-                <h3>{member.name}</h3>
-                <p className="crew-full-name">{member.fullName} · {member.name}</p>
+                <div className="crew-identity">
+                  {member.portrait && <img className="crew-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, a member of the Quantum Atlas team`} loading="lazy" />}
+                  <div><h3>{member.name}</h3><p className="crew-full-name">{member.fullName}</p></div>
+                </div>
                 <div className="crew-role-group">
                   <p className="crew-role-label">Previous build</p>
                   <div className="crew-role-chips" aria-label={`${member.name}'s contributions carried over from the previous build`}>
