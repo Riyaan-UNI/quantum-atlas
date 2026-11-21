@@ -1120,6 +1120,9 @@ body:has(.loading-intro) {
 .crew-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(0.85rem, 2vw, 1.25rem); }
 .crew-card { min-inline-size: 0; overflow: hidden; border: 0.0625rem solid rgba(245, 242, 234, 0.17); border-radius: var(--radius-medium); background: rgba(245, 242, 234, 0.055); }
 .crew-evidence { position: relative; overflow: hidden; aspect-ratio: 16 / 8.8; background: #040a10; }
+.crew-card-portrait-wrap { position: relative; display: grid; inline-size: 100%; block-size: 100%; place-items: center; overflow: hidden; background: radial-gradient(ellipse at center, #18353a, #07131a 75%); }
+.crew-card-portrait-backdrop { position: absolute; inset: -1rem; inline-size: calc(100% + 2rem); block-size: calc(100% + 2rem); object-fit: cover; filter: blur(1.1rem) brightness(0.4) saturate(0.85); transform: scale(1.04); }
+.crew-card-portrait { position: relative; z-index: 1; display: block; inline-size: 100%; block-size: 100%; object-fit: contain; object-position: center 35%; }
 .crew-site-preview > img { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; object-position: center 45%; opacity: 0.86; }
 .crew-site-window { position: absolute; inset-inline-start: 7%; inset-block-end: 9%; display: grid; gap: 0.15rem; inline-size: min(72%, 22rem); padding: clamp(0.6rem, 1.8vw, 1rem); border: 0.0625rem solid rgba(245, 242, 234, 0.55); border-radius: 0.7rem; background: rgba(4, 10, 16, 0.82); color: var(--white); box-shadow: 0 0.7rem 1.8rem rgba(0, 0, 0, 0.32); }
 .crew-site-window span { color: var(--green); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; }
@@ -1129,6 +1132,9 @@ body:has(.loading-intro) {
 .crew-video-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.35rem; block-size: 100%; padding: 0.55rem; }
 .crew-video-strip a { display: grid; min-inline-size: 0; align-items: center; overflow: hidden; border-radius: 0.5rem; background: #10242a; }
 .crew-video-strip img { display: block; inline-size: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.crew-markus-artwork { position: relative; inline-size: 100%; block-size: 100%; overflow: hidden; background: #07131a; }
+.crew-markus-artwork img { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(0.2, 0.75, 0.25, 1); }
+.crew-card-speaker:hover .crew-markus-artwork img { transform: scale(1.035); }
 .crew-evidence-label { position: absolute; inset-inline-end: 0.7rem; inset-block-end: 0.7rem; padding: 0.3rem 0.55rem; border: 0.0625rem solid rgba(69, 232, 93, 0.5); border-radius: 999rem; background: rgba(7, 19, 26, 0.9); color: var(--green); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.13em; }
 .crew-script-page { display: grid; block-size: 100%; align-content: center; gap: 0.45rem; padding: clamp(0.9rem, 2.2vw, 1.6rem); background: repeating-linear-gradient(0deg, #f5f2ea 0, #f5f2ea 1.65rem, #d8d2c5 1.7rem, #f5f2ea 1.75rem); color: var(--ink); }
 .script-page-kicker { margin: 0; color: var(--dark-green); font-size: 0.67rem; font-weight: 700; letter-spacing: 0.12em; }
@@ -1342,6 +1348,9 @@ body:has(.loading-intro) {
 .crew-reveal-card > p:not(.eyebrow) { margin: 0; color: var(--mist); }
 .crew-reveal-evidence { display: grid; min-block-size: 0; aspect-ratio: 16 / 7; place-items: center; overflow: hidden; border: 0.0625rem solid rgba(245, 242, 234, 0.15); border-radius: var(--radius-medium); background: #040a10; }
 .crew-reveal-art { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
+.crew-reveal-portrait-wrap { position: relative; display: grid; inline-size: 100%; block-size: 100%; place-items: center; overflow: hidden; background: radial-gradient(ellipse at center, #18353a, #07131a 75%); }
+.crew-reveal-portrait-backdrop { position: absolute; inset: -1rem; inline-size: calc(100% + 2rem); block-size: calc(100% + 2rem); object-fit: cover; filter: blur(1.1rem) brightness(0.38) saturate(0.8); transform: scale(1.04); }
+.crew-reveal-portrait { position: relative; z-index: 1; display: block; inline-size: 100%; block-size: 100%; object-fit: contain; object-position: center 35%; }
 .crew-reveal-mascot { object-fit: contain; background: var(--ivory); }
 .crew-reveal-video-strip { display: grid; inline-size: 100%; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.35rem; padding: 0.5rem; }
 .crew-reveal-video-strip img { display: block; inline-size: 100%; aspect-ratio: 16 / 9; object-fit: cover; }

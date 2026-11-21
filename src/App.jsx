@@ -1273,6 +1273,7 @@ function CreditsPage() {
   }, [finale, reduced, run]);
 
   const memberEvidence = (member) => {
+    if (member.portrait) return <div className="crew-reveal-portrait-wrap"><img className="crew-reveal-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><img className="crew-reveal-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, a member of the Quantum Atlas team`} /></div>;
     if (member.evidence === "website") return <img className="crew-reveal-art" src={assetUrl("assets/black-hole-scene.png")} alt="The black-hole artwork used for the website experience." />;
     if (member.evidence === "mascot") return <img className="crew-reveal-art crew-reveal-mascot" src={assetUrl("assets/qubi-reference-sheet.png")} alt="The Qubi model and expression sheet." />;
     if (member.evidence === "speaker") return <div className="crew-reveal-video-strip">{releasedVideos.map((video) => <img key={video.id} src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} alt={`Video still from ${video.title}`} />)}</div>;
@@ -1337,6 +1338,7 @@ function CreditsPage() {
           {teamMembers.map((member, index) => (
             <motion.article className={`crew-card crew-card-${member.evidence}`} key={member.name} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.42, delay: index * 0.06 }}>
               <div className="crew-evidence">
+                {member.portrait && <div className="crew-card-portrait-wrap"><img className="crew-card-portrait-backdrop" src={assetUrl(member.portrait)} alt="" aria-hidden="true" /><img className="crew-card-portrait" src={assetUrl(member.portrait)} alt={`${member.name}, member of the Quantum Atlas team`} loading="lazy" /></div>}
                 {member.evidence === "website" && (
                   <div className="crew-site-preview">
                     <img src={assetUrl("assets/black-hole-scene.png")} alt="The dark cinematic black-hole scene used in the Quantum Atlas experience." />
@@ -1347,20 +1349,16 @@ function CreditsPage() {
                     </div>
                   </div>
                 )}
-                {member.evidence === "mascot" && (
+                {!member.portrait && member.evidence === "mascot" && (
                   <img className="crew-mascot-sheet" src={assetUrl("assets/qubi-reference-sheet.png")} alt="The team's Qubi model sheet, showing mascot poses and six expressions." />
                 )}
-                {member.evidence === "speaker" && (
-                  <div className="crew-video-strip" aria-label="The three released episode videos">
-                    {releasedVideos.map((video) => (
-                      <a key={video.id} href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" rel="noreferrer" aria-label={`Watch ${video.title}`}>
-                        <img src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} alt={`Episode image: ${video.title}`} loading="lazy" />
-                      </a>
-                    ))}
-                    <span className="crew-evidence-label">ON CAMERA</span>
+                {!member.portrait && member.evidence === "speaker" && (
+                  <div className="crew-markus-artwork">
+                    <img src={assetUrl(`assets/concept-art/${conceptArt.find((artwork) => artwork.topicId === "bell-game")?.filename ?? conceptArt[0].filename}`)} alt="Concept artwork for the Bell tests and CHSH game." loading="lazy" />
+                    <span className="crew-evidence-label">BELL TESTS · CHSH GAME</span>
                   </div>
                 )}
-                {member.evidence === "scripts" && (
+                {!member.portrait && member.evidence === "scripts" && (
                   <div className="crew-script-page">
                     <p className="script-page-kicker">FROM THE EPISODE SCRIPT</p>
                     <blockquote>“Qubi: Ooh, I love secrets!”</blockquote>
