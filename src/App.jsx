@@ -1093,30 +1093,35 @@ const projectMilestones = [
     title: "The first spark",
     detail: "Damian proposed a website with short videos explaining quantum ideas. The project began with Damian and Riyaan; Markus joined the team later.",
     people: ["Damian", "Riyaan"],
+    artTopic: "carrier",
   },
   {
     date: "5 October 2026",
     title: "A multimedia project",
     detail: "The instructor confirmed that the project could take a multimedia direction, opening the way for a website, videos, and visual material to work together.",
     people: ["Team"],
+    artTopic: "qubit-state",
   },
   {
     date: "7 October 2026",
     title: "Qubi gets a face and a name",
     detail: "Damian proposed a mascot and the team made its first design video. Riyaan came up with the name Qubi.",
     people: ["Damian", "Riyaan"],
+    artTopic: "entanglement",
   },
   {
     date: "9–15 October 2026",
     title: "Scripts, locations, and first roles",
     detail: "The team planned filming locations and divided the work. Markus became the on-camera speaker; Riyaan took on the website and camera; Damian led editing and wrote Scripts 1 and 2. The scripts and locations were revised before filming.",
     people: ["Damian", "Markus", "Riyaan"],
+    artTopic: "bell-game",
   },
   {
     date: "11–12 October 2026",
     title: "The first prototype and scripts",
     detail: "Riyaan published the first website prototype on GitHub. Damian joined the repository as a collaborator, and Scripts 1 and 2 were ready.",
     people: ["Damian", "Riyaan"],
+    artTopic: "computing",
     links: [{ label: "View the first prototype", href: "https://github.com/Riyaan-UNI/CCST9077-26-27-SemOne/tree/main" }],
   },
   {
@@ -1124,30 +1129,35 @@ const projectMilestones = [
     title: "First filming, first edit, and a reshoot decision",
     detail: "The team recorded the first two scripts. Riyaan ran the camera through multiple takes and introduced a teleprompter to help the speaker. Damian edited the early footage; camera shake led the team to agree on a reshoot.",
     people: ["Damian", "Markus", "Riyaan"],
+    artTopic: "sensing",
   },
   {
     date: "20–30 October 2026",
     title: "The team becomes four",
     detail: "After group registration opened, Cynthia joined following tutorial discussions with the team. All four registered as Group 1. Cynthia helped refine the scripts and wrote Scripts 3 and 4.",
     people: ["Cynthia", "Damian", "Markus", "Riyaan"],
+    artTopic: "teleportation",
   },
   {
     date: "31 October 2026",
     title: "A second day on camera",
     detail: "The team filmed Script 1 with Markus, then Script 3 with Cynthia as Alice and Markus as Bob.",
     people: ["Cynthia", "Damian", "Markus", "Riyaan"],
+    artTopic: "bell-game",
   },
   {
     date: "2–4 November 2026",
     title: "Reshooting, editing, and publishing three videos",
     detail: "Damian updated the earlier ‘Four People, One Robot’ build and shared the reshot Episode 1 edit. Riyaan helped Damian edit and assemble Episode 3, added music to Episodes 2 and 3, and Damian added subtitles and Qubi. The three videos went to YouTube on 4 November.",
     people: ["Damian", "Riyaan"],
+    artTopic: "computing",
   },
   {
     date: "5–13 November 2026",
     title: "Trying many versions of the website",
     detail: "Riyaan explored several visual directions, revising the site until the experience felt right. The branch history records those experiments.",
     people: ["Riyaan"],
+    artTopic: "spacetime",
     links: [
       { label: "UI refresh", href: "https://github.com/Riyaan-UNI/CCST9077-26-27-SemOne/tree/ui-refresh" },
       { label: "Quantum sci-fi UI", href: "https://github.com/Riyaan-UNI/CCST9077-26-27-SemOne/tree/feature/quantum-scifi-ui-overhaul" },
@@ -1160,12 +1170,14 @@ const projectMilestones = [
     title: "Recording the fourth episode",
     detail: "The team settled the location and plan. Riyaan filmed Cynthia as host, while Damian voiced Qubi and ran the teleprompter. The raw recording was uploaded that day.",
     people: ["Cynthia", "Damian", "Riyaan"],
+    artTopic: "qkd",
   },
   {
     date: "14–21 November 2026",
     title: "One more major design search",
     detail: "Riyaan continued refining the earlier site and settled on the ‘Quantum Bureau Field Journal’ direction. Wanting a more game-like experience, Riyaan started a fresh repository for Quantum Atlas on 20 November.",
     people: ["Riyaan"],
+    artTopic: "black-holes",
     links: [{ label: "Quantum Bureau Field Journal", href: "https://github.com/Riyaan-UNI/CCST9077-26-27-SemOne/tree/concept/quantum-bureau-field-journal" }],
   },
   {
@@ -1173,12 +1185,18 @@ const projectMilestones = [
     title: "Building Quantum Atlas together",
     detail: "Riyaan shaped the game-like site step by step, using the lecture materials and notes as science references, and generated and curated 22 concept-art images with Google NanoBanana Pro. Riyaan drafted the story prompt and worked with AI on refinements and scene ideas; the team’s creative choices and science review remain human responsibilities.",
     people: ["Team", "Riyaan"],
+    artTopic: "computation-universe",
     links: [{ label: "Open the Quantum Atlas repository", href: "https://github.com/Riyaan-UNI/quantum-atlas" }],
   },
 ];
 
 function CreditsPage() {
   const reduced = useReducedMotion();
+  const timelineRef = useRef(null);
+  const { scrollYProgress: timelineScrollProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 0.85", "end 0.25"],
+  });
   const [activeCrew, setActiveCrew] = useState(-1);
   const [finale, setFinale] = useState(false);
   const [revealDone, setRevealDone] = useState(Boolean(reduced));
@@ -1381,23 +1399,29 @@ function CreditsPage() {
             <p><strong>Hours not tracked</strong><span>We won’t invent a total from calendar dates.</span></p>
           </div>
         </header>
-        <ol className="project-timeline-list">
+        <div className="project-timeline-track" ref={timelineRef}>
+          <motion.div className="timeline-progress-fill" style={{ scaleY: reduced ? 0 : timelineScrollProgress, transformOrigin: "top" }} aria-hidden="true" />
+          <ol className="project-timeline-list">
           {projectMilestones.map((milestone, index) => (
-            <motion.li className="timeline-milestone" key={`${milestone.date}-${milestone.title}`} initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.35, delay: Math.min(index % 4, 3) * 0.05 }}>
+            <motion.li className="timeline-milestone" key={`${milestone.date}-${milestone.title}`} initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} whileHover={{ y: -2 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.35, delay: Math.min(index % 4, 3) * 0.05 }}>
               <div className="timeline-marker" aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span></div>
               <article className="timeline-entry">
-                <p className="timeline-date">{milestone.date}</p>
-                <h3>{milestone.title}</h3>
-                <p>{milestone.detail}</p>
-                <p className="timeline-people"><span>Involved</span> {milestone.people.join(" · ")}</p>
-                {milestone.links?.length > 0 && <details className="timeline-evidence">
-                  <summary>Explore project evidence <span aria-hidden="true">↗</span></summary>
-                  <ul>{milestone.links.map((link) => <li key={link.href}><a href={link.href} target="_blank" rel="noreferrer">{link.label}</a></li>)}</ul>
-                </details>}
+                <img className="timeline-artwork" src={assetUrl(`assets/concept-art/${conceptArt.find((artwork) => artwork.topicId === milestone.artTopic)?.filename ?? conceptArt[index % conceptArt.length].filename}`)} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <div className="timeline-entry-copy">
+                  <p className="timeline-date">{milestone.date}</p>
+                  <h3>{milestone.title}</h3>
+                  <p>{milestone.detail}</p>
+                  <p className="timeline-people"><span>Involved</span> {milestone.people.join(" · ")}</p>
+                  {milestone.links?.length > 0 && <details className="timeline-evidence">
+                    <summary>Explore project evidence <span aria-hidden="true">↗</span></summary>
+                    <ul>{milestone.links.map((link) => <li key={link.href}><a href={link.href} target="_blank" rel="noreferrer">{link.label}</a></li>)}</ul>
+                  </details>}
+                </div>
               </article>
             </motion.li>
           ))}
-        </ol>
+          </ol>
+        </div>
         <p className="timeline-closing">The current site is the latest chapter in a project shaped by repeated experiments, shared production work, and a lot of care.</p>
       </section>
       <section className="credits-section" id="ai-use">
