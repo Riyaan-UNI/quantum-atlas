@@ -524,7 +524,11 @@ h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; letter-spacin
 
 .credits-section { max-inline-size: var(--body-width); padding-block: 1.5rem; border-block-start: 0.0625rem solid var(--line); }
 .credits-section h2 { margin-block: 0 0.5rem; font-size: 1.45rem; }
+.credits-section h3 { margin-block: 1.1rem 0.35rem; font-size: 1.05rem; }
 .credits-section p { margin-block: 0.5rem; }
+.ai-disclosure-list { display: grid; gap: 0.65rem; margin: 0.5rem 0 1rem; padding-inline-start: 1.25rem; }
+.ai-disclosure-list li { padding-inline-start: 0.2rem; }
+.ai-disclosure-list strong { color: var(--dark-green); }
 .contribution-list { display: grid; gap: 0.75rem; margin: 1rem 0 0; padding: 0; list-style: none; }
 .contribution-list li { display: grid; gap: 0.15rem; padding-block: 0.65rem; border-block-end: 0.0625rem solid var(--line); }
 .contribution-list span { color: #586569; }

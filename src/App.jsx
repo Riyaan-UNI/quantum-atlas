@@ -1412,8 +1412,19 @@ function CreditsPage() {
         <p className="timeline-closing">The current site is the latest chapter in a project shaped by repeated experiments, shared production work, and a lot of care.</p>
       </section>
       <section className="credits-section" id="ai-use">
-        <h2>AI use</h2>
-        <p>ChatGPT assisted with research and planning, design exploration, website coding and debugging, language edits, and refining Riyaan’s story prompt and scene ideas. Google NanoBanana Pro generated the concept-art images. The team set the creative direction, wrote and revised its project scripts, selected the final outputs, and takes responsibility for fact-checking the science.</p>
+        <h2>Detailed AI-use disclosure</h2>
+        <p>This statement describes AI use in the Quantum Atlas website and materials discussed in this project chat. The course requires complete, unedited AI conversation histories to be submitted separately; this disclosure does not replace them.</p>
+        <h3>ChatGPT</h3>
+        <ul className="ai-disclosure-list">
+          <li><strong>Website code:</strong> ChatGPT generated substantial portions of the site’s React/JavaScript and CSS, including page components, responsive layouts, navigation, image viewing, motion and interaction behavior. It also debugged errors and revised the implementation in response to Riyaan’s direction and review.</li>
+          <li><strong>Research and design:</strong> ChatGPT helped research and organize project topics, develop the site structure and user flows, and prepare design plans, wireframes, accessibility guidance, and visual interaction ideas. Riyaan and the team chose the direction and reviewed the resulting site.</li>
+          <li><strong>Writing and story:</strong> Riyaan supplied the core idea and prompt for “The Letter That Arrives Late.” ChatGPT helped refine the prompt, explore plot and scene ideas, and draft story material. Some website wording and explanations were also drafted or revised with ChatGPT’s assistance. The four video scripts were team-authored: Damian wrote Scripts 1 and 2, and Cynthia wrote Scripts 3 and 4. ChatGPT did not generate those scripts or the recorded videos.</li>
+          <li><strong>Concept-art prompts:</strong> ChatGPT drafted and refined prompts for the quantum concept-art images. It did not generate the images themselves.</li>
+        </ul>
+        <h3>Google NanoBanana Pro</h3>
+        <p>Google NanoBanana Pro generated the concept-art images from prompts. Riyaan reviewed the outputs, selected and discarded images, and curated the artwork used in the project.</p>
+        <h3>Team-created work and responsibility</h3>
+        <p>The team developed and produced the four episode videos, including the scripts, performances, filming, and editing. The team set the project’s creative direction, selected the final materials, and is responsible for checking the scientific explanations against the course sources. AI assistance should not be counted as a student contribution.</p>
       </section>
       <section className="credits-section" aria-labelledby="technology-credits-title">
         <h2 id="technology-credits-title">Libraries and technologies</h2>
