@@ -128,6 +128,8 @@ The interface includes keyboard-visible focus, a compact navigation at smaller w
 
 ## Team and AI-use statement
 
+This project was submitted by **Group 1** for CCST9077.
+
 The reviewed contribution record is shown on the website's **Credits** page. Current-build additions are marked separately from the previous build's roles.
 
 > ChatGPT supported research, design and story brainstorming, website coding and debugging, and language edits; Google NanoBanana Pro generated the concept-art images. The team chose the creative direction and is responsible for reviewing and editing the submitted work.
