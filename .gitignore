@@ -17,3 +17,6 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
+
+# Private AI conversation history (keep local; do not publish)
+/AI-chathistory.md
